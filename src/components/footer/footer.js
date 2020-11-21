@@ -45,7 +45,7 @@ class Footer extends Component {
 
                                     <h3>Contact Us</h3>
                                     <p className="contact-email">info@yourdomain.com</p>
-                                    <p className="contact-phone">1-444-123-9829</p>
+                                    <p className="contact-phone">7777777777</p>
 
 
                                 </div>
