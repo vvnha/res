@@ -44,8 +44,8 @@ class Footer extends Component {
                                     </form>
 
                                     <h3>Contact Us</h3>
-                                    <p className="contact-email">TVQUY</p>
-                                    <p className="contact-phone">123 456 789</p>
+                                    <p className="contact-email">TVQUY / VVNHA</p>
+                                    <p className="contact-phone">123 456 789/ 123456</p>
 
 
                                 </div>
