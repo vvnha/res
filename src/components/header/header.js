@@ -1,15 +1,59 @@
 import { Component } from 'react';
 import { connect } from 'react-redux';
 import * as actions from '../../actions/index';
+import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
+
+const menus = [
+    {
+        name: 'Home',
+        to: '/',
+        exact: true
+    },
+    {
+        name: 'About Us',
+        to: '/about',
+        exact: false
+    },
+    {
+        name: 'Our Menu',
+        to: '/menu',
+        exact: false
+    },
+    {
+        name: 'Our Blog',
+        to: '/blog',
+        exact: false
+    },
+    {
+        name: 'Reserve A Table',
+        to: '/reservation',
+        exact: false
+    },
+    {
+        name: 'Contact',
+        to: '/contact',
+        exact: false
+    },
+]
+
+const MenuLink = ({ label, to, acitiveOnlyWhenExact, cla }) => {
+    return (
+        <Route path={to} exact={acitiveOnlyWhenExact} children={({ match }) => {
+            var active = match ? 'active ' : '';
+            return (
+                <li className={active + cla} >
+                    <Link to={to}>{label}</Link>
+                </li>
+            );
+        }} />
+    );
+}
 
 class Header extends Component {
 
     onToggleForm = (event) => {
         this.props.onToggleForm();
         event.preventDefault();
-    }
-    onShowList = (isDisplayForm) => {
-        //li.classList.toggle("is-show", isDisplayForm === true);
     }
 
     render() {
@@ -20,47 +64,49 @@ class Header extends Component {
             document.body.classList.remove('menu-open');
         }
         var show = isDisplayForm ? "is-show" : "";
-        var bg = isDisplayForm === true ? ' white' : '';
-        var cl = isDisplayForm === true ? ' black' : '';
-        var bd = isDisplayForm === true ? ' 2px solid #000' : '';
+        var classOfMenu = isDisplayForm === true ? 'scrolled awake' : 'scrolled awake';
+
         return (
             <div>
-
                 <nav className="site-menu" style={{ display: isDisplayForm === true ? 'block' : 'none' }} >
                     <div className="site-menu-inner">
-                        <ul className="list-unstyled">
-                            <li className={show}><a href="index.html">Home</a></li>
-                            <li className={show}><a href="about.html">About Us</a></li>
-                            <li className={show}><a href="menu.html">Our Menu</a></li>
-                            <li className={show}><a href="blog.html">Our Blog</a></li>
-                            <li className={show}><a href="reservation.html">Reserve A Table</a></li>
-                            <li className={show}><a href="contact.html">Contact</a></li>
+                        <ul className="list-unstyled" onClick={this.onToggleForm}>
+                            {this.showMenus(menus, show)}
                         </ul>
                     </div>
                 </nav>
-
-                <header className={"site-header scrolled awake"} style={{ background: `${bg}` }}>
+                <header className={`site-header ${classOfMenu}`} >
                     <div className="row align-items-center">
                         <div className="col-5 col-md-3">
                             <ul className="list-unstyled social">
-                                <li><a href="#" style={{ color: `${cl}` }}><span className="fa fa-facebook"></span></a></li>
-                                <li><a href="#" style={{ color: `${cl}` }}><span className="fa fa-twitter"></span></a></li>
-                                <li><a href="#" style={{ color: `${cl}` }}><span className="fa fa-instagram"></span></a></li>
+                                <li><a href="#" ><span className="fa fa-facebook"></span></a></li>
+                                <li><a href="#" ><span className="fa fa-twitter"></span></a></li>
+                                <li><a href="#" ><span className="fa fa-instagram"></span></a></li>
                             </ul>
                         </div>
                         <div className="col-2 col-md-6 text-center">
-                            <a href="index.html" className="site-logo" style={{ border: `${bd}`, color: `${cl}` }}>D</a>
+                            <a href="index.html" className="site-logo" >D</a>
                         </div>
                         <div className="col-5 col-md-3 text-right menu-burger-wrap">
                             <a href="#" className={`site-nav-toggle js-site-nav-toggle ${isDisplayForm === true ? 'active' : ''}`} onClick={this.onToggleForm}><i></i></a>
 
                         </div>
                     </div>
-
                 </header>
             </div >
         );
     }
+
+    showMenus = (menus, show) => {
+        var result = null;
+        if (menus.length > 0) {
+            result = menus.map((menu, index) => {
+                return (<MenuLink key={index} label={menu.name} to={menu.to} acitiveOnlyWhenExact={menu.exact} cla={show} />);
+            })
+        }
+        return result;
+    }
+
 }
 const mapStateToProps = state => {
     return {

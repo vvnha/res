@@ -1,18 +1,35 @@
 import './App.css';
 import { Component } from 'react';
-import Home from '../src/components/content/home/home';
-import About from './components/content/about/about';
-import Blog from './components/content/blog/blog';
-import BlogSingle from './components/content/blog-single/blog-single';
-import Contact from './components/content/contact/contact';
-import Reser from './components/content/reservation/reservation';
-import Menu from './components/content/menu/menu';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import Header from './components/header/header';
+import routes from './routes';
+
 import { connect } from 'react-redux';
+
 class App extends Component {
+
   render() {
     return (
-      <Home />
+      <Router>
+        <div className="App">
+          <div className="site-wrap">
+            <Header />
+            <Switch>
+              {this.showContentMenus(routes)}
+            </Switch>
+          </div>
+        </div>
+      </Router>
     );
+  }
+  showContentMenus = (routes) => {
+    var result = null;
+    if (routes.length > 0) {
+      result = routes.map((route, index) => {
+        return (<Route key={index} path={route.path} exact={route.exact} component={route.main} />);
+      });
+    }
+    return result;
   }
 }
 
@@ -21,7 +38,7 @@ const mapStateToProps = state => {
   };
 }
 const mapDispatchToProps = (dispatch, props) => {
-  return {};
+  return {
+  };
 }
-
 export default connect(mapStateToProps, mapDispatchToProps)(App);

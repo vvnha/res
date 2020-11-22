@@ -100,7 +100,7 @@ class Feeds extends Component {
                                 <li className="page-item active"><a className="page-link" href="#">1 </a></li>
                                 <li className="page-item"><a className="page-link" href="#">2</a></li>
                                 <li className="page-item"><a className="page-link" href="#">3</a></li>
-                                <li className="page-item next"><a className="page-link" href="#"><i class="fa fa-angle-right"></i></a></li>
+                                <li className="page-item next"><a className="page-link" href="#"><i className="fa fa-angle-right"></i></a></li>
                             </ul>
                         </div>
                     </div>
