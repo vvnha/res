@@ -8,6 +8,8 @@ import Reser from './components/content/reservation/reservation';
 import Menu from './components/content/menu/menu';
 import Header from './components/header/header';
 import NotFound from './components/NotFound';
+import Login from './components/content/login/login';
+import Registry from './components/content/registry/registry';
 
 const routes = [
     {
@@ -40,11 +42,22 @@ const routes = [
         exact: false,
         main: () => <Contact />
     },
+      {
+        path: '/login',
+        exact: false,
+        main: () => <Login />
+    },
+        {
+        path: '/registry',
+        exact: false,
+        main: () => <Registry />
+    },
     {
         path: '',
         exact: false,
         main: () => <NotFound />
     },
+
 ];
 
 export default routes;

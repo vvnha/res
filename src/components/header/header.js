@@ -82,10 +82,13 @@ class Header extends Component {
                                 <li><a href="#" ><span className="fa fa-facebook"></span></a></li>
                                 <li><a href="#" ><span className="fa fa-twitter"></span></a></li>
                                 <li><a href="#" ><span className="fa fa-instagram"></span></a></li>
+                                <li><a href="/login" ><span className="fa">Login</span></a></li>
+                                <li><a href="/registry" ><span className="fa">Sig up</span></a></li>
                             </ul>
                         </div>
                         <div className="col-2 col-md-6 text-center">
-                            <a href="index.html" className="site-logo" >D</a>
+                            {/*<a href="/" className="site-logo" >D</a>*/}
+                            <Link to="/" className="site-logo">D</Link>
                         </div>
                         <div className="col-5 col-md-3 text-right menu-burger-wrap">
                             <a href="#" className={`site-nav-toggle js-site-nav-toggle ${isDisplayForm === true ? 'active' : ''}`} onClick={this.onToggleForm}><i></i></a>
