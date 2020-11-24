@@ -1,4 +1,41 @@
 import { Component } from 'react';
+import OwlCarousel from 'react-owl-carousel';
+import 'owl.carousel/dist/assets/owl.carousel.css';
+import 'owl.carousel/dist/assets/owl.theme.default.css';
+
+const Food = ({ name, time, price }) => {
+    return (
+        <div className="media d-block media-bg-white mb-5" data-aos="fade-up" data-aos-delay="400">
+            <figure>
+                <a href="#"><img src="default/img/img_1.jpg" alt="Image placeholder" className="img-fluid" /></a>
+            </figure>
+            <div className="media-body">
+                <h3><a href="#" className="nameFood">{name}</a></h3>
+                <p className="post-meta"><span><span className="fa fa-calendar"></span> April 22, 2018</span></p>
+                <div className="price order-2"><strong className="mau">{price}</strong></div>
+                <p><a href="#" className="btn btn-primary btn-outline-primary btn-sm">Order</a></p>
+            </div>
+        </div>
+    );
+}
+
+const MultiFood = ({ name, time, price }) => {
+    return (
+        <div>
+            <Food name={name} time={time} price={price} />
+            <Food name={name} time={time} price={price} />
+        </div>
+    );
+}
+
+const responsive = {
+    0: {
+        items: 1,
+    },
+    600: {
+        items: 4,
+    }
+}
 
 class Menu extends Component {
     render() {
@@ -21,50 +58,21 @@ class Menu extends Component {
                                     <a className="nav-link" id="pills-dinner-tab" data-toggle="pill" href="#pills-dinner" role="tab" aria-controls="pills-dinner" aria-selected="false">Dinner</a>
                                 </li>
                             </ul>
+
                             <div className="tab-content" id="pills-tabContent">
+
                                 <div className="tab-pane fade show active" id="pills-breakfast" role="tabpanel" aria-labelledby="pills-breakfast-tab">
-                                    <div className="d-block d-md-flex menu-food-item">
-                                        <div className="text order-1 mb-3">
-                                            <h3><a href="#">Warm Spinach Dip &amp; Chips</a></h3>
-                                            <p>Spinach and artichokes in a creamy cheese dip with warm tortilla chips &amp; salsa.</p>
-                                        </div>
-                                        <div className="price order-2">
-                                            <strong>$10.49</strong>
-                                        </div>
+                                    <div className="carousel-inner">
+                                        <OwlCarousel items={4} className="carousel slide" loop nav margin={8} responsive={responsive}>
+                                            <MultiFood name="Spinach Dip &amp; Chips" time="April 22, 2018" price="3000000 VND" />
+                                            <MultiFood name="Key Wast Machos" time="April 22, 2018" price="3000000 VND" />
+                                            <MultiFood name="GHI" time="April 22, 2018" price="3000000 VND" />
+                                            <MultiFood name="KLM" time="April 22, 2018" price="3000000 VND" />
+                                            <MultiFood name="KLM" time="April 22, 2018" price="3000000 VND" />
+                                        </OwlCarousel>
                                     </div>
-
-                                    <div className="d-block d-md-flex menu-food-item">
-                                        <div className="text order-1 mb-3">
-                                            <h3><a href="#">Key Wast Machos</a></h3>
-                                            <p>Crisp tortilla and plantain chips covered with lightly spiced ground beef, melted cheese, pickled jalapeños, guacamole, sour cream and salsa.</p>
-                                        </div>
-                                        <div className="price order-2">
-                                            <strong>$11.99</strong>
-                                        </div>
-                                    </div>
-
-                                    <div className="d-block d-md-flex menu-food-item">
-                                        <div className="text order-1 mb-3">
-                                            <h3><a href="#">Crispy Onions Rings</a></h3>
-                                            <p>A heaping mountain of rings, handmade with Panko breading and shredded coconut flakes.</p>
-                                        </div>
-                                        <div className="price order-2">
-                                            <strong>$11.99</strong>
-                                        </div>
-                                    </div>
-
-                                    <div className="d-block d-md-flex menu-food-item">
-                                        <div className="text order-1 mb-3">
-                                            <h3><a href="#">Lobster &amp; Shrimp Quesadilla</a></h3>
-                                            <p>Lobster and tender shrimp, with onions, sweet peppers, spinach and our three cheese blend. Griddled and served with tomato salsa and sour cream.</p>
-                                        </div>
-                                        <div className="price order-2">
-                                            <strong>$13.99</strong>
-                                        </div>
-                                    </div>
-
-
                                 </div>
+
                                 <div className="tab-pane fade" id="pills-lunch" role="tabpanel" aria-labelledby="pills-lunch-tab">
 
                                     <div className="d-block d-md-flex menu-food-item">
