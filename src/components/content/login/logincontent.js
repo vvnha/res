@@ -1,10 +1,24 @@
 
 import { Component } from 'react';
-
+import axios from 'axios';
+// import {PostData} from './PostData';
 class Logincontent extends Component {
+   //http://restaurantqn.herokuapp.com/
+       
     render() {
+        axios({
+            method: 'GET',
+            url: 'https://restaurantqn.herokuapp.com/api/foods/getFoods',
+            data: null,
+        }).then(res => {
+            console.log(res);
+        }).catch(err => {
+            console.log(err);
+        });
+
         return (
-            <div>
+ 
+        <div>
                 <div className="section" data-aos="fade-up">
                     <div className="container">
                         <div className="row justify-content-center mb-5">
@@ -15,20 +29,22 @@ class Logincontent extends Component {
                         </div>
                         <div className="row justify-content-center">
                             <div className="col-md-10 p-5 form-wrap">
-                                <form action="#">
+                                {/* <form action=""> */}
                                     <div className="row mb-4">
                                         <div className="form-group col-md-12">
-                                            <label htmlFor="email" className="label"> <h4>Email</h4></label>
+                                            {/* <label htmlFor="email" className="label" Style="text-align:left">Email 1</label> */}
+                                            <p htmlFor="email" className="label" Style="text-align:left">Email</p>
                                             <div className="form-field-icon-wrap">
                                                 <span className="icon ion-email"></span>
-                                                <input type="text" className="form-control" id="email" />
+                                                <input type="text" className="form-control" name="email" />
                                             </div>
                                         </div>
                                         <div className="form-group col-md-12">
-                                            <label htmlFor="Password" className="label"> <h4>Password</h4></label>
+                                            {/* <label htmlFor="Password" className="label">Password</label> */}
+                                            <p htmlFor="Password" className="label" Style="text-align:left">Password</p>
                                             <div className="form-field-icon-wrap">
                                                 {/*<span className="icon ion-android-call"></span>*/}
-                                                <input type="password" className="form-control" id="password" />
+                                                <input type="password" className="form-control" name="password" />
                                             </div>
                                         </div>
                                     </div>
@@ -36,9 +52,10 @@ class Logincontent extends Component {
                                     <div className="row justify-content-center">
                                         <div className="col-md-4">
                                             <input type="submit" className="btn btn-primary btn-outline-primary btn-block" value="LOGIN" />
+                                            {/* <button  onClick={()=>{this.login()}}>LOGIN</button> */}
                                         </div>
                                     </div>
-                                </form>
+                                {/* </form> */}
                             </div>
                         </div>
                     </div>
