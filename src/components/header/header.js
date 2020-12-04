@@ -83,7 +83,7 @@ class Header extends Component {
                                 <li><a href="#" ><span className="fa fa-twitter"></span></a></li>
                                 <li><a href="#" ><span className="fa fa-instagram"></span></a></li>
                                 <li><a href="/login" ><span className="fa">Login</span></a></li>
-                                <li><a href="/registry" ><span className="fa">Sig up</span></a></li>
+                                <li><a href="/registry" ><span className="fa">Sign up</span></a></li>
                             </ul>
                         </div>
                         <div className="col-2 col-md-6 text-center">
