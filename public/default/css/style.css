@@ -309,13 +309,14 @@ textarea.form-control {
 }
 
 .media h3 {
-  font-size: 20px;
-  margin-bottom: 10px;
+  font-size: 17px;
+  margin-bottom: 5px;
 }
 
 .media .post-meta {
-  font-size: 14px;
+  font-size: 12px;
   letter-spacing: .1em;
+  margin-bottom: 0.2rem;
   text-transform: uppercase;
 }
 
@@ -340,7 +341,7 @@ textarea.form-control {
 }
 
 .media.media-bg-white .media-body {
-  padding: 20px;
+  padding: 2px;
   background: #fff;
 }
 
@@ -348,6 +349,14 @@ textarea.form-control {
   display: block;
   text-align: center;
   margin-bottom: 80px !important;
+}
+.nameFood {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    line-height: 20px;
+    -webkit-line-clamp: 2;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
 }
 
 .site-tab-nav li {
@@ -1037,6 +1046,7 @@ textarea.form-control {
   min-height: 600px;
   height: 80vh;
 }
+
 
 .cover_1 .sub-heading {
   color: rgba(255, 255, 255, 0.7);

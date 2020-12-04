@@ -12,8 +12,7 @@ import Choice from './choice';
 class Home extends Component {
     render() {
         return (
-            <div className="site-wrap">
-                <Header />
+            <div>
                 <div className="main-wrap">
                     <Cover />
                     <Service />

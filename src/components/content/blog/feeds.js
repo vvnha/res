@@ -83,7 +83,7 @@ class Feeds extends Component {
                                     <a href="blog-single.html"><img src="default/img/img_1.jpg" alt="Image placeholder" className="img-fluid" /></a>
                                 </figure>
                                 <div className="media-body">
-                                    <h3><a href="blog-single.html">Food that are best for your overall health</a></h3>
+                                    <h3><a href="blog-single.html">Food that are best for your overall  for your overall health for your overall health for your overall health health</a></h3>
                                     <p className="post-meta"><span><span className="fa fa-calendar"></span> April 22, 2018</span></p>
                                     <p className="mb-4">Lorem ipsum dolor sit amet consectetur adipisicing elit. Architecto illo delectus</p>
                                     <p><a href="#" className="btn btn-primary btn-outline-primary btn-sm">Read More</a></p>
@@ -100,7 +100,7 @@ class Feeds extends Component {
                                 <li className="page-item active"><a className="page-link" href="#">1 </a></li>
                                 <li className="page-item"><a className="page-link" href="#">2</a></li>
                                 <li className="page-item"><a className="page-link" href="#">3</a></li>
-                                <li className="page-item next"><a className="page-link" href="#"><i class="fa fa-angle-right"></i></a></li>
+                                <li className="page-item next"><a className="page-link" href="#"><i className="fa fa-angle-right"></i></a></li>
                             </ul>
                         </div>
                     </div>

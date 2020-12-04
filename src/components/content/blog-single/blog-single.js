@@ -8,15 +8,12 @@ class BlogSingle extends Component {
     render() {
         return (
             <div>
-                <Header />
-                <div className="main-wrap">
-                    <Cover />
-                    <div className="section">
-                        <div className="container">
-                            <div className="row">
-                                <New />
-                                <Categories />
-                            </div>
+                <Cover />
+                <div className="section">
+                    <div className="container">
+                        <div className="row">
+                            <New />
+                            <Categories />
                         </div>
                     </div>
                 </div>

@@ -9,13 +9,10 @@ class About extends Component {
     render() {
         return (
             <div>
-                <Header />
-                <div className="main-wrap">
-                    <Cover />
-                    <History />
-                    <Choice />
-                    <Chefs />
-                </div>
+                <Cover />
+                <History />
+                <Choice />
+                <Chefs />
                 <Footer />
             </div >
         );
