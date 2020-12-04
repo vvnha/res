@@ -13,11 +13,6 @@ class Logincontent extends Component {
     this.login = this.login.bind(this);
     this.onChange = this.onChange.bind(this);
     }
-    // PostData('login', this.state).then ((result) =>{
-    //     let reponseJson = result;
-    //     console.log(reponseJson);
-
-    // });
 
     login(){
         axios({
@@ -37,8 +32,6 @@ class Logincontent extends Component {
 }
        
     render() {
-       
-
         return (
  
         <div>
