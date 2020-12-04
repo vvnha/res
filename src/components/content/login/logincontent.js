@@ -18,14 +18,14 @@ class Logincontent extends Component {
                                 <form action="#">
                                     <div className="row mb-4">
                                         <div className="form-group col-md-12">
-                                            <label htmlFor="email" className="label" >Email</label>
+                                            <label htmlFor="email" className="label"> <h4>Email</h4></label>
                                             <div className="form-field-icon-wrap">
                                                 <span className="icon ion-email"></span>
                                                 <input type="text" className="form-control" id="email" />
                                             </div>
                                         </div>
                                         <div className="form-group col-md-12">
-                                            <label htmlFor="Password" className="label">Password</label>
+                                            <label htmlFor="Password" className="label"> <h4>Password</h4></label>
                                             <div className="form-field-icon-wrap">
                                                 {/*<span className="icon ion-android-call"></span>*/}
                                                 <input type="password" className="form-control" id="password" />
