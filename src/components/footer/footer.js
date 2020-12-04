@@ -47,7 +47,6 @@ class Footer extends Component {
                                     <p className="contact-email">info@yourdomain.com</p>
                                     <p className="contact-phone">7777777777</p>
 
-
                                 </div>
                             </div>
                         </div>
