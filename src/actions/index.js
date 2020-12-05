@@ -15,3 +15,9 @@ export const closeForm = () => {
         type: types.CLOSE_FORM
     }
 }
+export const storeToken = (token) => {
+    return {
+        type: types.STORE_TOKEN,
+        token
+    }
+}
