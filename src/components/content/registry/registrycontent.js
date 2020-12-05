@@ -10,7 +10,6 @@ import * as actions from '../../../actions/index';
 const info = (inf) => {
     return <h2>{inf}</h2>
 }
-// positionID
 class Registrycontent extends Component {
 
     constructor(props) {
@@ -20,7 +19,7 @@ class Registrycontent extends Component {
             name: '',
             email: '',
             phone: '',
-            positionID: 1,
+            positionID: 3,
             password: '',
             password_confirmation: '',
             loggedIn,
@@ -39,7 +38,7 @@ class Registrycontent extends Component {
             } else {
 
                 callApi('api/signup', 'POST', this.state).then(res => {
-                    console.log(res.data);
+                    //console.log(res.data);
                     var check = res.data
                     if (check.code) {
                         this.setState({
@@ -51,7 +50,6 @@ class Registrycontent extends Component {
                             loggedIn: true
                         });
                     }
-
                 });
             }
         }

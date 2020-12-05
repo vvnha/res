@@ -1,6 +1,5 @@
-
 import { Component } from 'react';
-import axios from 'axios';
+// import axios from 'axios';
 import { Link } from 'react-router-dom';
 import { Redirect } from 'react-router-dom';
 import callApi from '../utils/apiCaller';
@@ -14,7 +13,8 @@ class Logincontent extends Component {
         this.state = {
             email: '',
             password: '',
-            loggedIn
+            loggedIn,
+            errors: null
         }
         this.login = this.login.bind(this);
         this.onChange = this.onChange.bind(this);
@@ -33,26 +33,55 @@ class Logincontent extends Component {
                             });
                             //console.log(this.props.token);
                         } else {
-                            alert("Sai email hoặc mật khẩu! ");
+                            //alert("Error Token");
+                            this.setState({errors: 1});
+                            this.onShowError(1);
                         }
                     } else {
-                        alert("Server het han ");
+                        this.setState({ errors: 2});//alert("Sai email hoặc mật khẩu!");
+                        this.onShowError(2);
                     }
                 });
             } else {
-                alert("Nhập password!");
+                this.setState({ errors: 3});//alert("Nhập password!");
+                this.onShowError(3);
             }
         }
         else {
-            alert("Nhập địa chỉ email");
+            this.setState({errors:4});//alert("Nhập địa chỉ email");
+            this.onShowError(4);
         }
     }
     onChange(e) {
         this.setState({ [e.target.name]: e.target.value });
         // console.log(this.state);
     }
+    onShowError(error) {
+        var result = null;
+        if (error!==null) {
+            var text = "";
+            if (error===1) {
+                text = `${text}Error Token`;
+            }
+            if (error===2) {
+                text = `${text}Sai email hoặc mật khẩu!`;
+            }
+            if (error===3) {
+                text = `${text}Nhập password!`;
+            }
+            if (error===4) {
+                text = `${text}Nhập địa chỉ email!`;
+            }
+            return <h4 style={{ color: 'red' }}>{text}</h4>;
+        }
+        return result;
+    }
 
     render() {
+        if (this.props.token !== "") {
+            return <Redirect to="/" />
+        }
+        var { errors } = this.state;
         if (this.state.loggedIn) {
             return <Redirect to="/" />
         }
@@ -67,6 +96,7 @@ class Logincontent extends Component {
                                 <p className="lead">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolorum fuga, alias distinctio voluptatum magni voluptatibus.</p>
                             </div>
                         </div>
+                        {this.onShowError(errors)}
                         <div className="row justify-content-center">
                             <div className="col-md-10 p-5 form-wrap">
                                 {/* <form action=""> */}
