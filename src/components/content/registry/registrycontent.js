@@ -39,16 +39,13 @@ class Registrycontent extends Component {
             } else {
 
                 callApi('api/signup', 'POST', this.state).then(res => {
-                    //console.log(res.data.code);
+                    console.log(res.data);
                     var check = res.data
-                    if (check.code !== 200 || check !== 201) {
+                    if (check.code) {
                         this.setState({
                             errors: check.error
                         });
-                        //console.log(!this.state.errors.email);
-                        //alert(this.state.errors.length);
                         this.onShowError(this.state.errors);
-                        //alert(JSON.stringify(check.error));
                     } else {
                         this.setState({
                             loggedIn: true
@@ -65,7 +62,7 @@ class Registrycontent extends Component {
     }
     onShowError(error) {
         var result = null;
-        if (error !== null) {
+        if (error) {
             var text = "";
             if (error.email) {
                 text = `${text}Email đã được sử dụng`;
@@ -84,6 +81,10 @@ class Registrycontent extends Component {
     render() {
         if (this.props.token !== "") {
             return <Redirect to="/" />
+        }
+        console.log(this.state.loggedIn);
+        if (this.state.loggedIn === true) {
+            return <Redirect to="/login" />
         }
         var { errors } = this.state;
         //console.log(this.props.token);
