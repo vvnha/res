@@ -19,15 +19,24 @@ class Registrycontent extends Component {
         }
     
         signup(){
-            axios({
-                method: 'POST',
-                url: 'https://restaurantqn.herokuapp.com/api/signup',
-                data:  this.state,
-            }).then(res => {
-                console.log(res);
-            }).catch(err => {
-                console.log(err);
-            });
+            if (this.state.password !== this.state.reTypepassword){
+                alert('Passwords do not match. Please check your data !');
+            } else 
+            {
+                axios({
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        Accept: 'application/json',
+                    },
+                    url: 'https://restaurantqn.herokuapp.com/api/signup',
+                    data:  this.state,
+                }).then(res => {
+                    console.log(res);
+                }).catch(err => {
+                    console.log(err);
+                });
+            }
        
         }
         onChange(e){

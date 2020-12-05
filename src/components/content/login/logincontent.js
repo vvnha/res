@@ -1,30 +1,49 @@
 
 import { Component } from 'react';
 import axios from 'axios';
-// import {PostData} from './PostData';
+import { Link } from 'react-router-dom';
+import {Redirect} from 'react-router-dom';
+
 class Logincontent extends Component {
    //http://restaurantqn.herokuapp.com/
    constructor(props){
     super(props);
+    let loggedIn = false
     this.state ={
         email:'',
-        password:''
+        password:'',
+        loggedIn
     }
     this.login = this.login.bind(this);
     this.onChange = this.onChange.bind(this);
     }
 
     login(){
-        axios({
-            method: 'POST',
-            url: 'https://restaurantqn.herokuapp.com/api/login',
-            data:  this.state,
-        }).then(res => {
-            console.log(res);
-        }).catch(err => {
-            console.log(err);
-        });
-   
+        let re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+        if ( re.test(this.state.email) ) {
+            if(this.state.password!=""){
+                axios({
+                    method: 'POST',
+                    url: 'https://restaurantqn.herokuapp.com/api/login',
+                    data:  this.state,
+                }).then((res) => {
+                    this.setState({
+                        loggedIn: true
+                       }) 
+                    // alert("Thành công ");
+                    //console.log(res.data.access_token);
+                    // dispatch({type: GET_USER, res});
+                }).catch(err => {
+                    // console.log(err);
+                    alert("Sai email hoặc mật khẩu! "+ err);
+                });
+            }else{
+                alert("Nhập password!");
+            }
+        }
+        else {
+            alert("Nhập địa chỉ email");
+        }
     }
     onChange(e){
     this.setState({[e.target.name]: e.target.value});
@@ -32,6 +51,9 @@ class Logincontent extends Component {
 }
        
     render() {
+        if(this.state.loggedIn){
+            return <Redirect to="/" />
+        }
         return (
  
         <div>
@@ -52,7 +74,7 @@ class Logincontent extends Component {
                                             <p htmlFor="email" className="label" Style="text-align:left">Email</p>
                                             <div className="form-field-icon-wrap">
                                                 <span className="icon ion-email"></span>
-                                                <input type="text" className="form-control" name="email" onChange={this.onChange}/>
+                                                <input type="text" className="form-control" id="email" name="email" onChange={this.onChange}/>
                                             </div>
                                         </div>
                                         <div className="form-group col-md-12">
