@@ -25,14 +25,18 @@ class Logincontent extends Component {
         if (re.test(this.state.email)) {
             if (this.state.password !== "") {
                 callApi('api/login', 'POST', this.state).then(res => {
-                    this.props.onAddToken(res.data.access_token);
-                    if (this.props.token) {
-                        this.setState({
-                            loggedIn: true
-                        });
-                        //console.log(this.props.token);
+                    if (res) {
+                        this.props.onAddToken(res.data.access_token);
+                        if (this.props.token) {
+                            this.setState({
+                                loggedIn: true
+                            });
+                            //console.log(this.props.token);
+                        } else {
+                            alert("Sai email hoặc mật khẩu! ");
+                        }
                     } else {
-                        alert("Sai email hoặc mật khẩu! ");
+                        alert("Server het han ");
                     }
                 });
             } else {
