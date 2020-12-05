@@ -39,8 +39,6 @@ class Menu extends Component {
 
     componentDidMount() {
         this.getFoods();
-        this.props.onAddToken("abc");
-        console.log(this.props.token);
     }
 
     render() {
