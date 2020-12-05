@@ -65,12 +65,12 @@ class Header extends Component {
 
     componentDidMount() {
 
-        if (this.props.token !== null) {
+        if (this.props.token && this.props.token !== null) {
             var token = this.props.token;
             var header = {
                 'Authorization': `Bearer ${JSON.parse(token)}`,
             }
-            //console.log(header);
+            console.log(header);
             callApi('api/user', 'GET', null, header).then(res => {
                 if (res.data) {
                     var data = res.data;

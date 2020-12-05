@@ -9,6 +9,7 @@ import Reser from './components/content/reservation/reservation';
 import Header from './components/header/header';
 import NotFound from './components/NotFound';
 import Login from './components/content/login/login';
+import Logout from './components/content/login/logout';
 import Registry from './components/content/registry/registry';
 const Home = lazy(() => import('../src/components/content/home/home'));
 const Menu = lazy(() => import('../src/components/content/menu/menu'));
@@ -53,6 +54,11 @@ const routes = [
         path: '/registry',
         exact: false,
         main: () => <Registry />
+    },
+    {
+        path: '/logout',
+        exact: false,
+        main: () => <Logout />  //logout
     },
     {
         path: '',
