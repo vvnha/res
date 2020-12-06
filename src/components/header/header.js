@@ -37,6 +37,13 @@ const menus = [
         exact: false
     }
 ]
+const logOut = [
+    {
+        name: 'Logout',
+        to: '/logout',
+        exact: false
+    }
+]
 
 
 const MenuLink = ({ label, to, acitiveOnlyWhenExact, cla }) => {
@@ -62,20 +69,21 @@ class Header extends Component {
             menus: menus,
         };
     }
-    showLogOut = () => {
-        //console.log(menus.length);
+    showTasks = (tasks) => {
         var newElement = null;
         var array = [...this.state.menus];
+        var result = null;
         if (localStorage.getItem('token')) {
-            newElement = {
-                name: 'Logout',
-                to: '/logout',
-                exact: false
+            if (tasks.length > 0) {
+                console.log(tasks.length);
+                result = tasks.map((task, index) => {
+                    array.push(task);
+                });
+                this.setState({
+                    menus: array
+                });
             }
-            array.push(newElement);
-            this.setState({
-                menus: array
-            });
+
         }
         return array;
     }
@@ -95,7 +103,7 @@ class Header extends Component {
             callApi('api/user', 'GET', null, { 'Authorization': `Bearer ${JSON.parse(token)}` }).then(res => {
                 if (res) {
                     var data = res.data;
-                    this.showLogOut(this.state.menus);
+                    this.showTasks(logOut);
                     this.setState({
                         userName: data.name,
                         isLoading: false
