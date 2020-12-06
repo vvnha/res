@@ -79,14 +79,12 @@ class Logincontent extends Component {
         }
         return result;
     }
-
     componentWillUnmount() {
         //alert(this.state.loggedIn);
         if (this.state.loggedIn === true) {
             return <Redirect to="/" />
         }
     }
-
     render() {
         if (this.props.token !== "") {
             return <Redirect to="/" />

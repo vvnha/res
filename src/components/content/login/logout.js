@@ -3,8 +3,23 @@ import axios from 'axios';
 import { Redirect } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
+import callApi from '../utils/apiCaller';
 
 class logout extends Component {
+    check(){
+        
+        let token = JSON.parse(localStorage.getItem('token'));
+        var header = {Authorization : `Bearer ${token}`};
+        callApi('api/logout', 'GET', null, header).then(res => {
+            if (res) {
+                localStorage.removeItem('token');
+                return <Redirect to="/" />
+            }else{
+                localStorage.removeItem('token');
+                return <Redirect to="/" />
+            }
+        });
+    }
     render() {
         if (localStorage.getItem('token')) {
             //return <Redirect to="/" />
