@@ -45,6 +45,28 @@ const logOut = [
     }
 ]
 
+const adminTasks = [
+    {
+        name: 'All user',
+        to: '/user',
+        exact: false
+    },
+    {
+        name: 'Post and update food',
+        to: '/changeFood',
+        exact: false
+    },
+    {
+        name: 'All contact',
+        to: '/seeContact',
+        exact: false
+    },
+    {
+        name: 'Logout',
+        to: '/logout',
+        exact: false
+    }
+]
 
 const MenuLink = ({ label, to, acitiveOnlyWhenExact, cla }) => {
     return (
@@ -67,6 +89,7 @@ class Header extends Component {
             userName: null,
             isLoading: false,
             menus: menus,
+            position: 0,
         };
     }
     showTasks = (tasks) => {
@@ -75,7 +98,6 @@ class Header extends Component {
         var result = null;
         if (localStorage.getItem('token')) {
             if (tasks.length > 0) {
-                console.log(tasks.length);
                 result = tasks.map((task, index) => {
                     array.push(task);
                 });
@@ -103,11 +125,16 @@ class Header extends Component {
             callApi('api/user', 'GET', null, { 'Authorization': `Bearer ${JSON.parse(token)}` }).then(res => {
                 if (res) {
                     var data = res.data;
-                    this.showTasks(logOut);
                     this.setState({
                         userName: data.name,
-                        isLoading: false
-                    })
+                        isLoading: false,
+                        position: data.positionID
+                    });
+                    if (this.state.position === 1) {
+                        this.showTasks(adminTasks);
+                    } else {
+                        this.showTasks(logOut);
+                    }
                 } else {
                     localStorage.removeItem('token');
                     console.log(res + "--Erro token!");
