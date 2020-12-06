@@ -9,6 +9,7 @@ class Reser extends Component {
     render() {
         return (
             <div>
+                <Header />
                 <Cover />
                 <ReserForm />
                 <Reviews />

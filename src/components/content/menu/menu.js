@@ -9,6 +9,7 @@ class Menu extends Component {
     render() {
         return (
             <div>
+                <Header />
                 <Cover />
                 <MenuList />
                 <Specialities />

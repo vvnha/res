@@ -8,6 +8,7 @@ class Blog extends Component {
     render() {
         return (
             <div>
+                <Header />
                 <Cover />
                 <Feeds />
                 <Footer />

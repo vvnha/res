@@ -13,6 +13,7 @@ class Home extends Component {
     render() {
         return (
             <div>
+                <Header />
                 <div className="main-wrap">
                     <Cover />
                     <Service />

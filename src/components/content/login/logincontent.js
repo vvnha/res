@@ -9,12 +9,12 @@ import * as actions from '../../../actions/index';
 class Logincontent extends Component {
     constructor(props) {
         super(props);
-        let loggedIn = false
+        //let loggedIn = false
         this.state = {
             email: '',
             password: '',
-            loggedIn,
-            errors: null
+            loggedIn: false,
+            errors: null,
         }
         this.login = this.login.bind(this);
         this.onChange = this.onChange.bind(this);
@@ -27,6 +27,9 @@ class Logincontent extends Component {
                 callApi('api/login', 'POST', this.state).then(res => {
                     if (res) {
                         this.props.onAddToken(res.data.access_token);
+                        this.setState({
+                            loggedIn: true
+                        });
                         if (this.props.token) {
                             this.setState({
                                 loggedIn: true
@@ -34,21 +37,21 @@ class Logincontent extends Component {
                             //console.log(this.props.token);
                         } else {
                             //alert("Error Token");
-                            this.setState({errors: 1});
+                            this.setState({ errors: 1 });
                             this.onShowError(1);
                         }
                     } else {
-                        this.setState({ errors: 2});//alert("Sai email hoặc mật khẩu!");
+                        this.setState({ errors: 2 });//alert("Sai email hoặc mật khẩu!");
                         this.onShowError(2);
                     }
                 });
             } else {
-                this.setState({ errors: 3});//alert("Nhập password!");
+                this.setState({ errors: 3 });//alert("Nhập password!");
                 this.onShowError(3);
             }
         }
         else {
-            this.setState({errors:4});//alert("Nhập địa chỉ email");
+            this.setState({ errors: 4 });//alert("Nhập địa chỉ email");
             this.onShowError(4);
         }
     }
@@ -58,18 +61,18 @@ class Logincontent extends Component {
     }
     onShowError(error) {
         var result = null;
-        if (error!==null) {
+        if (error !== null) {
             var text = "";
-            if (error===1) {
+            if (error === 1) {
                 text = `${text}Error Token`;
             }
-            if (error===2) {
+            if (error === 2) {
                 text = `${text}Sai email hoặc mật khẩu!`;
             }
-            if (error===3) {
+            if (error === 3) {
                 text = `${text}Nhập password!`;
             }
-            if (error===4) {
+            if (error === 4) {
                 text = `${text}Nhập địa chỉ email!`;
             }
             return <h4 style={{ color: 'red' }}>{text}</h4>;
@@ -77,14 +80,19 @@ class Logincontent extends Component {
         return result;
     }
 
+    componentWillUnmount() {
+        //alert(this.state.loggedIn);
+        if (this.state.loggedIn === true) {
+            return <Redirect to="/" />
+        }
+    }
+
     render() {
         if (this.props.token !== "") {
             return <Redirect to="/" />
         }
         var { errors } = this.state;
-        if (this.state.loggedIn) {
-            return <Redirect to="/" />
-        }
+
         return (
 
             <div>

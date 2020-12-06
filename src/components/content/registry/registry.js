@@ -8,6 +8,7 @@ class Registry extends Component {
     render() {
         return (
             <div>
+                <Header />
                 <Coverregistry />
                 < Registrycontent />
                 <Footer />
