@@ -10,11 +10,13 @@ class Logincontent extends Component {
     constructor(props) {
         super(props);
         let loggedIn = false
+        let checktoken = false
         this.state = {
             email: '',
             password: '',
             loggedIn,
-            errors: null
+            errors: null,
+            checktoken
         }
         this.login = this.login.bind(this);
         this.onChange = this.onChange.bind(this);
@@ -76,11 +78,26 @@ class Logincontent extends Component {
         }
         return result;
     }
-
-    render() {
-        if (this.props.token !== "") {
-            return <Redirect to="/" />
+    check(){
+        if (this.props.token !== null) {
+            let token = JSON.parse(localStorage.getItem('token'));
+            var header = {Authorization : `Bearer ${token}`};
+            callApi('api/user', 'GET', null, header).then(res => {
+                if(res) {
+                    return <Redirect to="/" />
+                }else{
+                   
+                    console.log("error token");
+                } 
+            });
         }
+    }
+    render() {
+        if(!this.state.checktoken){
+            this.check();
+            this.setState({checktoken: true});
+        }
+
         var { errors } = this.state;
         if (this.state.loggedIn) {
             return <Redirect to="/" />

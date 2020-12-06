@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import * as actions from '../../actions/index';
 import callApi from '../content/utils/apiCaller';
 import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
+import { Redirect } from 'react-router-dom';
 
 const menus = [
     {
@@ -70,13 +71,16 @@ class Header extends Component {
             var header = {
                 'Authorization': `Bearer ${JSON.parse(token)}`,
             }
-            console.log(header);
+            //console.log(header);
             callApi('api/user', 'GET', null, header).then(res => {
-                if (res.data) {
+                if (res) {
                     var data = res.data;
                     this.setState({
                         userName: data.name,
                     })
+                }else{
+                    localStorage.removeItem('token');
+                    console.log(res+"--Erro token!");
                 }
             });
         }
@@ -96,7 +100,7 @@ class Header extends Component {
         var classOfMenu = isDisplayForm === true ? 'scrolled awake' : 'scrolled awake';
         var userName = this.state.userName !== null ? this.state.userName : 'Login';
         //console.log(userName);
-        var showButton = this.state.userName !== null ? <a href="" style={{ float: "left", marginLeft: "10px" }} className="btn btn-primary  btn-outline-primary btn-sm">Log Out</a> : <a href="/registry" style={{ float: "left", marginLeft: "60px" }} ><span className="fa">Sign up</span></a>;
+        var showButton = this.state.userName !== null ? <a href="/logout" style={{ float: "left", marginLeft: "10px" }} className="btn btn-primary  btn-outline-primary btn-sm">Log Out</a> : <a href="/registry" style={{ float: "left", marginLeft: "60px" }} ><span className="fa">Sign up</span></a>;
         return (
             <div>
                 <nav className="site-menu" style={{ display: isDisplayForm === true ? 'block' : 'none' }} >
