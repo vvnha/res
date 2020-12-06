@@ -9,6 +9,7 @@ class About extends Component {
     render() {
         return (
             <div>
+                <Header />
                 <Cover />
                 <History />
                 <Choice />

@@ -9,6 +9,7 @@ class Contact extends Component {
     render() {
         return (
             <div>
+                <Header />
                 <Cover />
                 <ContactForm />
                 <Reviews />

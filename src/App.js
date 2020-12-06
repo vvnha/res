@@ -18,7 +18,6 @@ class App extends Component {
 
         <div className="App">
           <div className="site-wrap">
-            <Header />
             <Switch>
               {this.showContentMenus(routes)}
             </Switch>
