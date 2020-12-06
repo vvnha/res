@@ -9,7 +9,7 @@ export default function callApi(endpoint, method = 'GET', body, header = null) {
         url: `${Config.API_URL}/${endpoint}`,
         data: body,
     }).catch(err => {
-        console.log(header);
+        //console.log(header);
         console.log(err => this.setState({ err, isLoading: false }));
     });
 }

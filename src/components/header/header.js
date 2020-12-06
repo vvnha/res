@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import * as actions from '../../actions/index';
 import callApi from '../content/utils/apiCaller';
 import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
+import { Redirect } from 'react-router-dom';
 
 const menus = [
     {
