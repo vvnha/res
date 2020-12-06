@@ -34,11 +34,6 @@ const menus = [
         name: 'Contact',
         to: '/contact',
         exact: false
-    },
-    {
-        name: 'Logout',
-        to: '/logout',
-        exact: false
     }
 ]
 
@@ -63,27 +58,34 @@ class Header extends Component {
         this.state = {
             userName: null,
             isLoading: false,
+            menus: menus,
         };
     }
-    showLogOut = (menus) => {
+    showLogOut = () => {
+        //console.log(menus.length);
         var newElement = null;
-        if (this.props.token) {
+        var array = [...this.state.menus];
+        if (localStorage.getItem('token')) {
             newElement = {
                 name: 'Logout',
                 to: '/logout',
                 exact: false
             }
+            array.push(newElement);
+            this.setState({
+                menus: array
+            });
         }
-        menus.push(newElement);
-        //console.log(menus.length);
-        return menus;
+        return array;
     }
+
     onToggleForm = (event) => {
         this.props.onToggleForm();
         event.preventDefault();
     }
 
     componentDidMount() {
+
         this.setState({
             isLoading: true,
         });
@@ -92,6 +94,7 @@ class Header extends Component {
             callApi('api/user', 'GET', null, { 'Authorization': `Bearer ${JSON.parse(token)}` }).then(res => {
                 if (res) {
                     var data = res.data;
+                    this.showLogOut(this.state.menus);
                     this.setState({
                         userName: data.name,
                         isLoading: false
@@ -116,8 +119,7 @@ class Header extends Component {
     render() {
         var { isDisplayForm, token } = this.props;
         var { isLoading } = this.state;
-        //this.menus = this.showLogOut(menus);
-        //console.log(this.state.userName);
+
         if (isDisplayForm === true) {
             document.body.classList.add('menu-open');
         } else {
@@ -126,8 +128,8 @@ class Header extends Component {
         var show = isDisplayForm ? "is-show" : "";
         var classOfMenu = isDisplayForm === true ? 'scrolled awake' : 'scrolled awake';
         var userName = this.state.userName !== null && localStorage.getItem('token') ? this.state.userName : 'Login';
-        //console.log(userName);
         var showButton = this.state.userName !== null && localStorage.getItem('token') ? '' : <li><a href="/registry" ><span className="fa">Sign up</span></a></li>;
+
         return (
             <React.Fragment>
                 {isLoading === false ? (
@@ -135,7 +137,7 @@ class Header extends Component {
                         <nav className="site-menu" style={{ display: isDisplayForm === true ? 'block' : 'none' }} >
                             <div className="site-menu-inner">
                                 <ul className="list-unstyled" onClick={this.onToggleForm}>
-                                    {this.showMenus(menus, show)}
+                                    {this.showMenus(this.state.menus, show)}
                                 </ul>
                             </div>
                         </nav>
