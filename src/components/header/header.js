@@ -90,12 +90,15 @@ class Header extends Component {
         if (this.props.token && localStorage.getItem('token') && this.props.token !== null && this.props.token !== '') {
             var token = localStorage.getItem('token');
             callApi('api/user', 'GET', null, { 'Authorization': `Bearer ${JSON.parse(token)}` }).then(res => {
-                if (res.data) {
+                if (res) {
                     var data = res.data;
                     this.setState({
                         userName: data.name,
                         isLoading: false
                     })
+                } else {
+                    localStorage.removeItem('token');
+                    console.log(res + "--Erro token!");
                 }
             });
             this.setState({
