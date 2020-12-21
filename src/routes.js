@@ -7,6 +7,7 @@ import Contact from './components/content/contact/contact';
 import Reser from './components/content/reservation/reservation';
 //import Menu from './components/content/menu/menu';
 import Header from './components/header/header';
+import YourCart from './components/content/cart/cart';
 import NotFound from './components/NotFound';
 import Login from './components/content/login/login';
 import Logout from './components/content/login/logout';
@@ -54,6 +55,11 @@ const routes = [
         path: '/registry',
         exact: false,
         main: () => <Registry />
+    },
+    {
+        path: '/cart',
+        exact: false,
+        main: () => <YourCart />
     },
     {
         path: '/logout',
