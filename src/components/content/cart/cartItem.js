@@ -34,14 +34,15 @@ class CartItem extends Component {
             var cartid = this.props.cartid;
             var token = localStorage.getItem('token');
 
-            callApi(`api/orderDetails/${food.detailID}`, 'PATCH', newFood, { 'Authorization': `Bearer ${JSON.parse(token)}` }).then(res => {
-                alert("Da update thanh cong");
-            });
-            // } else {
-            //     callApi(`api/orderDetails/${food.detailID}`, 'DELETE', null, { 'Authorization': `Bearer ${JSON.parse(token)}` }).then(res => {
-            //         alert("Da xoa thanh cong");
-            //     });
-            // }
+            if (newFood.qty == 0) {
+                callApi(`api/orderDetails/${food.detailID}`, 'DELETE', null, { 'Authorization': `Bearer ${JSON.parse(token)}` }).then(res => {
+                    alert("Da xoa thanh cong");
+                });
+            } else {
+                callApi(`api/orderDetails/${food.detailID}`, 'PATCH', newFood, { 'Authorization': `Bearer ${JSON.parse(token)}` }).then(res => {
+                    alert("Da update thanh cong");
+                });
+            }
 
         }
     }
