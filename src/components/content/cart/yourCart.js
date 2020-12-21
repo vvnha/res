@@ -3,31 +3,32 @@ import CartItem from './cartItem';
 import callApi from '../utils/apiCaller';
 import { connect } from 'react-redux';
 import * as actions from '../../../actions/index';
+import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
 
 class YourCart extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            cartItem: [],
             cart: [],
             totalMoney: 0
         }
     }
     componentDidMount() {
 
-        // if (localStorage.getItem('token')) {
-        //     var token = localStorage.getItem('token');
-        //     callApi('api/users/getOrderUser', 'GET', null, { 'Authorization': `Bearer ${JSON.parse(token)}` }).then(res => {
-        //         this.forOrder(res.data.data, token);
-        //     });
-        // }
-        if (localStorage.getItem('token') && localStorage.getItem('cartid') && cartid !== null) {
+        if (localStorage.getItem('token') && cartid !== null) {
             var cartid = this.props.cartid;
             var token = localStorage.getItem('token');
-            callApi(`api/orders/getDetail/${cartid}`, 'GET', null, { 'Authorization': `Bearer ${JSON.parse(token)}` }).then(res => {
-                this.setState({
-                    cart: res.data.data
-                });
+            callApi('api/users/getOrderUser', 'GET', null, { 'Authorization': `Bearer ${JSON.parse(token)}` }).then(res => {
+                this.forOrder(res.data.data, token);
             });
+            if (this.state.cart !== null && localStorage.getItem('cartid')) {
+                callApi(`api/orders/getDetail/${cartid}`, 'GET', null, { 'Authorization': `Bearer ${JSON.parse(token)}` }).then(res => {
+                    this.setState({
+                        cart: res.data.data
+                    });
+                });
+            }
         }
     }
     render() {
@@ -58,7 +59,7 @@ class YourCart extends Component {
                                         <a className="btn btn-primary btn-outline-primary btn-sm cancel" style={{ float: 'left', marginRight: '0px', marginTop: '10px' }}>Update</a>
                                     </div>
                                     <div className="price order-2">
-                                        <a className="btn btn-primary btn-outline-primary btn-sm cancel" style={{ float: 'right', marginRight: '0px', marginTop: '10px' }}>Oder</a>
+                                        <Link to='/reservation' className="btn btn-primary btn-outline-primary btn-sm cancel" style={{ float: 'right', marginRight: '0px', marginTop: '10px' }}>Reservation</Link>
                                     </div>
                                 </div>
                             </div>
@@ -95,8 +96,37 @@ class YourCart extends Component {
         // });
         return result;
     }
+    forOrder = (orders, token) => {
+        console.log(orders);
+        var result = null;
+        var dem = 0;
+        if (orders.length > 0) {
+            result = orders.map((order, index) => {
+                if (Number(order.perNum) === 1000 && order.service.includes('-1')) {
+                    dem = dem + 1;
+                    this.props.onAddCartId(order.orderID);
+                }
+            });
+            if (dem === 0) {
+                var today = new Date();
+                var date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate() + " " + today.getHours() + ':' + today.getMinutes() + ':' + today.getSeconds();
+                var body = {
+                    total: 0,
+                    orderDate: date,
+                    perNum: '1000',
+                    service: '-1',
+                    dateClick: date
+                }
+                callApi('api/orders', 'POST', body, { 'Authorization': `Bearer ${JSON.parse(token)}` }).then(res => {
+                    console.log(res);
+                }).catch(err => {
+                    console.log(Date().toLocaleString());
+                });
+            }
+        }
+        return result;
+    }
 }
-
 const mapStateToProps = state => {
     return {
         foods: state.foods,
@@ -108,6 +138,9 @@ const mapDispatchToProps = (dispatch, props) => {
     return {
         onAddToken: (token) => {
             dispatch(actions.storeToken(token));
+        },
+        onAddCartId: (cartid) => {
+            dispatch(actions.storeCartId(cartid));
         }
     };
 }

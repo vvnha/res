@@ -69,30 +69,33 @@ class Food extends Component {
     forOrder = (orders, token) => {
         var result = null;
         if (orders.length > 0) {
+            var dem = 0;
             result = orders.map((order, index) => {
                 if (Number(order.perNum) === 1000 && order.service.includes('-1')) {
+                    dem = dem + 1;
                     this.setState({
                         cart: order
                     });
                     this.props.onAddCartId(order.orderID);
-                } else {
-                    var foodItem = this.props.food;
-                    var today = new Date();
-                    var date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate() + " " + today.getHours() + ':' + today.getMinutes() + ':' + today.getSeconds();
-                    var body = {
-                        total: foodItem.price,
-                        orderDate: date,
-                        perNum: '1000',
-                        service: '-1',
-                        dateClick: date
-                    }
-                    callApi('api/orders', 'POST', body, { 'Authorization': `Bearer ${JSON.parse(token)}` }).then(res => {
-                        console.log(res);
-                    }).catch(err => {
-                        console.log(Date().toLocaleString());
-                    });
+                    return result;
                 }
             });
+            if (dem === 0) {
+                var today = new Date();
+                var date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate() + " " + today.getHours() + ':' + today.getMinutes() + ':' + today.getSeconds();
+                var body = {
+                    total: 0,
+                    orderDate: date,
+                    perNum: '1000',
+                    service: '-1',
+                    dateClick: date
+                }
+                callApi('api/orders', 'POST', body, { 'Authorization': `Bearer ${JSON.parse(token)}` }).then(res => {
+                    console.log(res);
+                }).catch(err => {
+                    console.log(Date().toLocaleString());
+                });
+            }
         }
         return result;
     }

@@ -28,3 +28,9 @@ export const storeCartId = (cartID) => {
         cartID
     }
 }
+export const storeUser = (user) => {
+    return {
+        type: types.STORE_USER,
+        user
+    }
+}

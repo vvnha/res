@@ -93,6 +93,7 @@ class Header extends Component {
         this.state = {
             userName: null,
             isLoading: false,
+            user: [],
             menus: menus,
             position: 0,
         };
@@ -132,9 +133,11 @@ class Header extends Component {
                     var data = res.data;
                     this.setState({
                         userName: data.name,
+                        user: data,
                         isLoading: false,
                         position: data.positionID
                     });
+                    this.props.onUser(this.state.user);
                     if (this.state.position === 1) {
                         this.showTasks(adminTasks);
                     } else {
@@ -229,6 +232,9 @@ const mapDispatchToProps = (dispatch, props) => {
     return {
         onToggleForm: () => {
             dispatch(actions.toggleForm());
+        },
+        onUser: (user) => {
+            dispatch(actions.storeUser(user));
         }
     };
 }

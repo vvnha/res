@@ -6,15 +6,15 @@ import { connect } from 'react-redux';
 import callApi from '../utils/apiCaller';
 
 class logout extends Component {
-    check(){
-        
+    check() {
+
         let token = JSON.parse(localStorage.getItem('token'));
-        var header = {Authorization : `Bearer ${token}`};
+        var header = { Authorization: `Bearer ${token}` };
         callApi('api/logout', 'GET', null, header).then(res => {
             if (res) {
                 localStorage.removeItem('token');
                 return <Redirect to="/" />
-            }else{
+            } else {
                 localStorage.removeItem('token');
                 return <Redirect to="/" />
             }
@@ -28,8 +28,10 @@ class logout extends Component {
             axios.get(api, { headers: { "Authorization": `Bearer ${token}` } })
                 .then(res => {
                     localStorage.removeItem('token');
+                    localStorage.removeItem('user');
                 }).catch(err => {
                     localStorage.removeItem('token');
+                    localStorage.removeItem('user');
                 });
             return <Redirect to="/" />
         } else {
