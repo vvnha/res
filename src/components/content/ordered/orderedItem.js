@@ -118,7 +118,7 @@ class OrderItem extends Component {
                                     <button className="btn btn-link" data-toggle="collapse" data-target={`#collapse${vitri}`} aria-expanded="false" aria-controls={`#collapse${vitri}`} style={{ width: '100%' }} >
 
                                         <div className="row">
-                                            <div className="text col-md-6 order-1 mb-3" style="padding-left: 0;">
+                                            <div className="text col-md-6 order-1 mb-3" style={{ paddingLeft: 0 }}>
                                                 <h3 style={{ float: "left" }} >
                                                     <Link to={`${url}/${slug}/${order.orderID}`}>{order.orderDate}</Link>
                                                 </h3>
@@ -141,7 +141,8 @@ class OrderItem extends Component {
                         </div>
                     </div>
                     <hr />
-                </div>) : (<p>Loading..</p>)}
+                </div>) : (<p>Loading..</p>)
+                }
             </React.Fragment>
         );
     }
