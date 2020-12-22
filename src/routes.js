@@ -12,6 +12,8 @@ import NotFound from './components/NotFound';
 import Login from './components/content/login/login';
 import Logout from './components/content/login/logout';
 import Registry from './components/content/registry/registry';
+import Ordered from './components/content/ordered/ordered';
+import Details from './components/content/ordered/details';
 const Home = lazy(() => import('../src/components/content/home/home'));
 const Menu = lazy(() => import('../src/components/content/menu/menu'));
 
@@ -60,6 +62,16 @@ const routes = [
         path: '/cart',
         exact: false,
         main: () => <YourCart />
+    },
+    {
+        path: '/ordered',
+        exact: false,
+        main: ({ match }) => <Ordered match={match} />
+    },
+    {
+        path: '/ordered/view',
+        exact: false,
+        main: ({ match }) => <Details match={match} />
     },
     {
         path: '/logout',

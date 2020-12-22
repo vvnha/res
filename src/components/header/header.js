@@ -44,6 +44,11 @@ const logOut = [
         exact: false
     },
     {
+        name: 'Ordered',
+        to: '/ordered',
+        exact: false
+    },
+    {
         name: 'Logout',
         to: '/logout',
         exact: false
