@@ -21,3 +21,16 @@ export const storeToken = (token) => {
         token
     }
 }
+
+export const storeCartId = (cartID) => {
+    return {
+        type: types.STORE_CARTID,
+        cartID
+    }
+}
+export const storeUser = (user) => {
+    return {
+        type: types.STORE_USER,
+        user
+    }
+}
