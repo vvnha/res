@@ -5,8 +5,10 @@ import callApi from '../utils/apiCaller';
 import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import NumberFormat from 'react-number-format';
 import { Redirect } from 'react-router-dom';
 import OrderedDetail from './orderedDetails';
+import View from '../view/View';
 
 toast.configure();
 class OrderItem extends Component {
@@ -31,7 +33,6 @@ class OrderItem extends Component {
         }
     }
     onShowDetail = (orderID) => {
-        console.log(orderID);
         if (localStorage.getItem('token')) {
             var token = localStorage.getItem('token');
             callApi(`api/orders/getDetail/${orderID}`, 'GET', null, { 'Authorization': `Bearer ${JSON.parse(token)}` }).then(res => {
@@ -67,7 +68,6 @@ class OrderItem extends Component {
         //toast.error(<Msg />);
     }
     onShow = (details) => {
-        console.log(details);
         var result = null;
         var info = '';
         if (details !== null && details.length > 0) {
@@ -88,7 +88,9 @@ class OrderItem extends Component {
                         </div>
 
                         <div className="col-xs-3 col-sm-3 col-md-3 col-lg-3">
-                            gia : {detail.price}
+                            gia :
+                            <NumberFormat value={parseInt
+                                (detail.price)} displayType={'text'} thousandSeparator={true} /> VND
                         </div>
 
 
@@ -100,6 +102,7 @@ class OrderItem extends Component {
     }
 
     render() {
+        console.log(this.props.location);
         var { order, match, vitri } = this.props;
         var { isLoading } = this.state;
         var detail = this.state.detail;
@@ -125,7 +128,8 @@ class OrderItem extends Component {
                                                 {/* <p style={{ float: "left", width: '100%', marginTop: '10px' }}><input name="number" className='quantity form-control' style={{ width: '150px', height: '35px' }} min="1" max="1000" defaultValue={food.qty} name='qty' onChange={this.onChange}></input></p> */}
                                             </div>
                                             <div className="price col-md-6 order-2">
-                                                <strong style={{ fontSize: '20px' }}>{order.total} VND</strong>
+                                                <strong style={{ fontSize: '20px' }}><NumberFormat value={parseInt
+                                                    (order.total)} displayType={'text'} thousandSeparator={true} /> VND</strong>
                                                 <a className="btn btn-primary btn-outline-primary btn-sm cancel" style={{ float: 'right', marginRight: '0px', marginTop: '10px', marginBottom: '10px' }} onClick={this.onDelete}>Cancel</a>
                                             </div>
                                         </div>

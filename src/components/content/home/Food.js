@@ -1,4 +1,5 @@
 import { Component } from 'react';
+import NumberFormat from 'react-number-format';
 import foods from '../../../reducers/foods';
 import callApi from '../utils/apiCaller';
 import * as actions from '../../../actions/index';
@@ -60,7 +61,8 @@ class Food extends Component {
                 <div className="media-body">
                     <h3><a href="#" className="nameFood">{food.foodName}</a></h3>
                     <p className="post-meta"><span><span className="fa fa-calendar"></span>{food.ingres}</span></p>
-                    <div className="price order-2"><strong className="mau">{food.price}</strong></div>
+                    <div className="price order-2"><strong className="mau"><NumberFormat value={parseInt
+                        (food.price)} displayType={'text'} thousandSeparator={true} /> VND</strong></div>
                     <p className="post-meta"><a href="" className="btn btn-primary btn-outline-primary btn-sm" onClick={this.onSubmit}>Order</a></p>
                 </div>
             </div>

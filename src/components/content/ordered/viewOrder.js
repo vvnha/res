@@ -18,7 +18,6 @@ class ViewOrder extends Component {
     }
 
     componentDidMount() {
-        console.log(this.props.match);
         if (localStorage.getItem('token') && cartid !== null) {
             var cartid = this.props.cartid;
             var token = localStorage.getItem('token');
@@ -78,7 +77,7 @@ class ViewOrder extends Component {
                 var token = localStorage.getItem('token');
                 var detail = null;
                 return (
-                    <OrderItem match={this.props.match} order={order} key={index} vitri={index} />
+                    <OrderItem match={this.props.match} location={this.props.location} order={order} key={index} vitri={index} />
                 );
             });
         }

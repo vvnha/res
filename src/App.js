@@ -7,6 +7,7 @@ import Login from './components/content/login/login';
 import Registry from './components/content/registry/registry';
 import Details from "./components/content/ordered/details";
 import { connect } from 'react-redux';
+import View from './components/content/view/View';
 
 class App extends Component {
 
@@ -16,7 +17,7 @@ class App extends Component {
 
         <Route path="/login" Component={Login} />
         <Route path="/registry" exact Component={Registry} />
-        <Route path='/ordered/:slug/:id' component={Details} />
+
 
         <div className="App">
           <div className="site-wrap">

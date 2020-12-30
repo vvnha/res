@@ -10,7 +10,7 @@ class Ordered extends Component {
             <div>
                 <Header />
                 <Cover />
-                <ViewOrder match={this.props.match} />
+                <ViewOrder match={this.props.match} location={this.props.location} />
                 <Footer />
             </div>
         );
