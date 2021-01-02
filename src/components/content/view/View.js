@@ -1,14 +1,97 @@
 import { Component } from 'react';
 import Footer from '../../footer/footer';
 import Header from '../../header/header';
-import Cover from '../view/cover';
+import axios from 'axios';
+import io from 'socket.io-client';
+import callApi from '../utils/apiCaller';
+
+var connectionOptions = {
+    "force new connection": true,
+    "reconnectionAttempts": "Infinity",
+    "timeout": 10000,
+    "transports": ["websocket"]
+};
+const socket = io("localhost:9000", connectionOptions);
 
 class View extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            table: []
+            table: [],
+            ordered: [],
+            content: '',
+            tableOrder: []
         }
+    }
+
+
+    componentDidMount() {
+        var { match } = this.props;
+        var orderID = match.params.id;
+        if (localStorage.getItem('token')) {
+            this.onGetPerNum(orderID);
+        }
+
+        socket.on('connect', function (data) {
+            socket.emit('join', 'hello server from client');
+        });
+        var ordered = this.state.ordered;
+
+        for (var i = 0; i < 16; i++) {
+            var table = {
+                id: i,
+                status: false
+            }
+            ordered.push(table);
+            this.setState({
+                ordered: ordered,
+            });
+        }
+
+        // this.setState({
+        //     content: "5,6,7"
+        // });
+
+
+        socket.on('thread', (data) => {
+            this.setState({
+                table: data,
+            });
+            var table = this.state.table;
+
+            if (table.length > 0) {
+                for (var i = 0; i < 16; i++) {
+                    var checkStatus = false;
+                    if (table.indexOf(i + 1) > -1) {
+                        ordered[i].status = true;
+                    } else {
+                        ordered[i].status = false;
+                    }
+                    this.setState({
+                        ordered: ordered,
+                    });
+                }
+
+            } else {
+                for (var i = 0; i < 16; i++) {
+                    ordered[i].status = false;
+                    this.setState({
+                        ordered: ordered,
+                    });
+                }
+            }
+        });
+    }
+    onGetPerNum = (orderID) => {
+        if (localStorage.getItem('token')) {
+            var token = localStorage.getItem('token');
+            callApi(`api/orders/${orderID}`, 'GET', null, { 'Authorization': `Bearer ${JSON.parse(token)}` }).then(res => {
+                this.setState({
+                    content: res.data.data.perNum,
+                });
+            });
+        }
+
     }
     render() {
         return (
@@ -19,24 +102,16 @@ class View extends Component {
                         <div className="row justify-content-center mb-5">
                             <div className="col-md-8  text-center">
                                 <h2 className="mb-3">Reservation</h2>
-                                <p className="lead">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolorum fuga, alias distinctio voluptatum magni voluptatibus.</p>
+                                <p className="lead">Ban cua ban la: {this.state.content}</p>
                             </div>
                         </div>
-
-                        {/* <div className="row justify-content-center">
-                            <div className='col-md-10 p-5 form-wrap'>
-                                <div className="row">
-                                    {this.onFor(16)}
-                                </div>
-                            </div>
-                        </div> */}
 
                         <div className="row justify-content-center">
                             <div className="col-md-10 p-5 form-wrap">
                                 <div className="row justify-content-center">
                                     <div className='col-md-10 p-5 form-wrap'>
                                         <div className="row">
-                                            {this.onFor(16)}
+                                            {this.onFor(this.state.ordered, this.state.content)}
                                         </div>
                                     </div>
                                 </div>
@@ -50,38 +125,74 @@ class View extends Component {
             </div>
         );
     }
-    onFor = (n) => {
-        const items = [];
-        for (var i = 1; i <= n; i++) {
-            items.push(<div key={i} className="col-xs-3 col-sm-3 col-md-3 col-lg-3" style={{ marginBottom: '10px' }}>
-                <p style={{ color: 'black', textAlign: 'center', margin: '50px' }} table={i} onClick={(e) => this.onchoose(e, i)}>{i}</p>
-            </div>);
+    onFor = (ordered, content) => {
+        var result = null;
+        var style1 = {
+            color: 'black',
+            textAlign: 'center',
+            margin: '50px'
         }
-        return items;
+        var style2 = {
+            color: 'black',
+            textAlign: 'center',
+            margin: '50px',
+            background: "#ff0"
+        }
+
+        if (ordered.length > 0) {
+            result = ordered.map((order, index) => {
+                return (
+                    <div key={index} className="col-xs-3 col-sm-3 col-md-3 col-lg-3" style={{ marginBottom: '10px' }}>
+                        <p style={order.status === false ? style1 : style2} table={index} onClick={(e) => this.onchoose(e, index, content)}>{index + 1}</p>
+                    </div>
+                );
+            })
+        }
+
+        return result;
     }
-    onchoose = (e, i) => {
+    onchoose = (e, i, content) => {
+
         var newTable = parseInt(e.target.innerText);
         var table = this.state.table;
-        var dem = 0;
-        for (var i = 0; i < table.length; i++) {
-            if (table[i] === newTable) {
-                dem++;
-                table.splice(i, 1);
-                this.setState({
-                    table: table,
-                });
+        var { ordered } = this.state;
+
+        var tableOrder;
+        if (content.includes(',')) {
+            tableOrder = content.split(",");
+        } else {
+            if (content !== null) {
+                tableOrder[0] = content;
             }
         }
-        if (dem === 0) {
-            table.push(newTable);
-            this.setState({
-                table: table,
-            });
+
+        if (tableOrder.length > 0) {
+            if (tableOrder.indexOf(newTable + "") > -1) {
+                var dem = 0;
+                for (var y = 0; y < table.length; y++) {
+                    if (table[y] === newTable) {
+                        dem++;
+                        table.splice(y, 1);
+                        //ordered[i].status = !ordered[i].status;
+                        this.setState({
+                            table: table,
+                            //ordered: ordered
+                        })
+                    }
+                }
+                if (dem === 0) {
+                    table.push(newTable);
+                    //ordered[i].status = !ordered[i].status;
+                    this.setState({
+                        table: table,
+                        //ordered: ordered
+                    })
+                }
+                socket.emit('message', this.state.table);
+            } else {
+                alert('ban chua dat ban nay');
+            }
         }
-
-
-
-        console.log(this.state.table);
     }
 }
 export default View;

@@ -102,7 +102,6 @@ class OrderItem extends Component {
     }
 
     render() {
-        console.log(this.props.location);
         var { order, match, vitri } = this.props;
         var { isLoading } = this.state;
         var detail = this.state.detail;

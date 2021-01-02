@@ -15,6 +15,7 @@ class reserForm extends Component {
         this.state = {
             user: {},
             table: [],
+            ordered: [],
             date: '',
             time: '',
             cart: [],
@@ -22,6 +23,17 @@ class reserForm extends Component {
         }
     }
     componentDidMount() {
+        var ordered = this.state.ordered;
+        for (var i = 0; i < 16; i++) {
+            var table = {
+                id: i,
+                status: false
+            }
+            ordered.push(table);
+            this.setState({
+                ordered: ordered,
+            });
+        }
         if (localStorage.getItem('token') && localStorage.getItem('user') && localStorage.getItem('cartid')) {
             var user = JSON.parse(localStorage.getItem('user'));
             this.setState({
@@ -51,13 +63,28 @@ class reserForm extends Component {
                             </div>
                         </div>
 
-                        {/* <div className="row justify-content-center">
-                            <div className='col-md-10 p-5 form-wrap'>
-                                <div className="row">
-                                    {this.onFor(16)}
+                        <div className="section" data-aos="fade-up">
+                            <div className="container">
+                                <div className="row justify-content-center mb-5">
+                                    <div className="col-md-8  text-center">
+                                        <h2 className="mb-3">Reservation</h2>
+                                        <p className="lead">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolorum fuga, alias distinctio voluptatum magni voluptatibus.</p>
+                                    </div>
+                                </div>
+
+                                <div className="row justify-content-center">
+                                    <div className="col-md-10 p-5 form-wrap">
+                                        <div className="row justify-content-center">
+                                            <div className='col-md-10 p-5 form-wrap'>
+                                                <div className="row">
+                                                    {this.onFor(this.state.ordered, this.state.content)}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
-                        </div> */}
+                        </div>
 
                         <div className="row justify-content-center">
                             <div className="col-md-10 p-5 form-wrap">
@@ -156,44 +183,103 @@ class reserForm extends Component {
     }
     onSubmit = (e) => {
         e.preventDefault();
-        var { user } = this.state;
-        var datetime = this.state.date + ' ' + this.state.time;
-        if (localStorage.getItem('cartid') && localStorage.getItem('token')) {
-            var cartid = this.props.cartid;
-            var token = localStorage.getItem('token');
-            var totalMoney = this.countSum(this.state.cart);
-            var body = {
-                total: totalMoney,
-                perNum: '0',
-                orderDate: datetime + ':00',
-                service: '0',
+        var { user, table } = this.state;
+        if (table.length > 0) {
+            var reserveTable = "";
+            for (var i = 0; i < table.length; i++) {
+                if (i == 0) {
+                    reserveTable = reserveTable + table[i];
+                } else {
+                    reserveTable = reserveTable + "," + table[i];
+                }
             }
-            if (this.state.date !== '' && this.state.time !== '') {
-                console.log(body);
-                callApi(`api/orders/${cartid}`, 'PATCH', body, { 'Authorization': `Bearer ${JSON.parse(token)}` }).then(res => {
-                    alert('Đã đặt thành công!!!');
-                    localStorage.removeItem('cartid');
-                }).catch(err => {
-                    console.log(Date().toLocaleString());
-                });
+
+            var datetime = this.state.date + ' ' + this.state.time;
+            if (localStorage.getItem('cartid') && localStorage.getItem('token')) {
+                var cartid = this.props.cartid;
+                var token = localStorage.getItem('token');
+                var totalMoney = this.countSum(this.state.cart);
+                var body = {
+                    total: totalMoney,
+                    perNum: reserveTable,
+                    orderDate: datetime + ':00',
+                    service: '0',
+                }
+                if (this.state.date !== '' && this.state.time !== '') {
+                    console.log(body);
+                    callApi(`api/orders/${cartid}`, 'PATCH', body, { 'Authorization': `Bearer ${JSON.parse(token)}` }).then(res => {
+                        alert('Đã đặt thành công!!!');
+                        localStorage.removeItem('cartid');
+                    }).catch(err => {
+                        console.log(Date().toLocaleString());
+                    });
+                } else {
+                    alert('Moi nhap day du ngay gio den!!!')
+                }
+
             } else {
-                alert('Moi nhap day du ngay gio den!!!')
+                alert('Moi dat mon truoc!')
             }
-
         } else {
-            alert('Moi dat mon truoc!')
+            alert('Moi ban chon ban');
         }
 
     }
-    onFor = (n) => {
-        const items = [];
-        for (var i = 1; i <= n; i++) {
-            items.push(<div key={i} className="col-xs-3 col-sm-3 col-md-3 col-lg-3" style={{ marginBottom: '10px' }}>
-                <p style={{ color: 'black', textAlign: 'center' }} table={i} onClick={(e) => this.onchoose(e, i)}>{i}</p>
-            </div>);
+    onFor = (ordered, content) => {
+        var result = null;
+        var style1 = {
+            color: 'black',
+            textAlign: 'center',
+            margin: '50px'
         }
-        return items;
+        var style2 = {
+            color: 'black',
+            textAlign: 'center',
+            margin: '50px',
+            background: "#ff0"
+        }
+
+        if (ordered.length > 0) {
+            result = ordered.map((order, index) => {
+                return (
+                    <div key={index} className="col-xs-3 col-sm-3 col-md-3 col-lg-3" style={{ marginBottom: '10px' }}>
+                        <p style={order.status === false ? style1 : style2} table={index} onClick={(e) => this.onchoose(e, index, content)}>{index + 1}</p>
+                    </div>
+                );
+            })
+        }
+
+        return result;
     }
+    onchoose = (e, i, content) => {
+
+        var newTable = parseInt(e.target.innerText);
+        var table = this.state.table;
+        var { ordered } = this.state;
+
+        var dem = 0;
+        for (var y = 0; y < table.length; y++) {
+            if (table[y] === newTable) {
+                dem++;
+                table.splice(y, 1);
+                ordered[i].status = !ordered[i].status;
+                this.setState({
+                    table: table,
+                    ordered: ordered
+                })
+            }
+        }
+        if (dem === 0) {
+            table.push(newTable);
+            ordered[i].status = !ordered[i].status;
+            this.setState({
+                table: table,
+                ordered: ordered
+            })
+        }
+        //console.log(this.state.table);
+    }
+
 }
 const mapStateToProps = state => {
     return {
