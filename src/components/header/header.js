@@ -39,6 +39,11 @@ const menus = [
 ]
 const logOut = [
     {
+        name: 'Profile',
+        to: '/profile',
+        exact: false
+    },
+    {
         name: 'Your Cart',
         to: '/cart',
         exact: false
