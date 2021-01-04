@@ -15,6 +15,7 @@ import Registry from './components/content/registry/registry';
 import Ordered from './components/content/ordered/ordered';
 import Details from './components/content/ordered/details';
 import View from './components/content/view/View';
+import User from "./components/content/user/user";
 const Home = lazy(() => import('../src/components/content/home/home'));
 const Menu = lazy(() => import('../src/components/content/menu/menu'));
 
@@ -73,6 +74,11 @@ const routes = [
         path: '/ordered/:slug/:id',
         exact: false,
         main: ({ match, location }) => <View match={match} location={location} />
+    },
+    {
+        path: '/user',
+        exact: false,
+        main: () => <User />
     },
     {
         path: '/logout',
