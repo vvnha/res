@@ -27,8 +27,14 @@ class OrderItem extends Component {
         if (this.props.order && localStorage.getItem('token')) {
             var token = localStorage.getItem('token');
             var order = this.props.order;
-            callApi(`api/orders/${order.orderID}`, 'DELETE', null, { 'Authorization': `Bearer ${JSON.parse(token)}` }).then(res => {
-                alert("Da xoa thanh cong");
+            var body = {
+                total: order.total,
+                perNum: order.perNum,
+                orderDate: order.orderDate,
+                service: '3'
+            }
+            callApi(`api/orders/${order.orderID}`, 'PATCH', body, { 'Authorization': `Bearer ${JSON.parse(token)}` }).then(res => {
+                alert("Da huy thanh cong");
             });
         }
     }
@@ -102,7 +108,7 @@ class OrderItem extends Component {
     }
 
     render() {
-        var { order, match, vitri } = this.props;
+        var { order, match, vitri, type } = this.props;
         var { isLoading } = this.state;
         var detail = this.state.detail;
         var the = this.onShowItem(detail, order.orderDate, order.total);
@@ -115,9 +121,9 @@ class OrderItem extends Component {
 
                     <div id="accordion">
                         <div className="card">
-                            <div className="card-header" id={`heading${vitri}`}>
+                            <div className="card-header" id={`heading${type}-${vitri}`}>
                                 <h5 className="mb-0">
-                                    <button className="btn btn-link" data-toggle="collapse" data-target={`#collapse${vitri}`} aria-expanded="false" aria-controls={`#collapse${vitri}`} style={{ width: '100%' }} >
+                                    <button className="btn btn-link" data-toggle="collapse" data-target={`#collapse${type}-${vitri}`} aria-expanded="false" aria-controls={`#collapse${vitri}`} style={{ width: '100%' }} >
 
                                         <div className="row">
                                             <div className="text col-md-6 order-1 mb-3" style={{ paddingLeft: 0 }}>
@@ -129,14 +135,14 @@ class OrderItem extends Component {
                                             <div className="price col-md-6 order-2">
                                                 <strong style={{ fontSize: '20px' }}><NumberFormat value={parseInt
                                                     (order.total)} displayType={'text'} thousandSeparator={true} /> VND</strong>
-                                                <a className="btn btn-primary btn-outline-primary btn-sm cancel" style={{ float: 'right', marginRight: '0px', marginTop: '10px', marginBottom: '10px' }} onClick={this.onDelete}>Cancel</a>
+                                                {order.service.includes('0') ? <a className="btn btn-primary btn-outline-primary btn-sm cancel" style={{ float: 'right', marginRight: '0px', marginTop: '10px', marginBottom: '10px' }} onClick={this.onDelete}>Cancel</a> : ''}
                                             </div>
                                         </div>
                                     </button>
                                 </h5>
                             </div>
 
-                            <div id={`collapse${vitri}`} className="collapse" aria-labelledby={`heading${vitri}`} data-parent="#accordion">
+                            <div id={`collapse${type}-${vitri}`} className="collapse" aria-labelledby={`heading${type}-${vitri}`} data-parent="#accordion">
                                 <div className="card-body">
                                     {this.onShow(this.state.detail)}
                                 </div>

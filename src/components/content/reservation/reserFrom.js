@@ -19,6 +19,8 @@ class reserForm extends Component {
             date: '',
             time: '',
             cart: [],
+            tableNotChoose: [],
+            numNotChoose: null,
             totalMoney: 0
         }
     }
@@ -71,12 +73,34 @@ class reserForm extends Component {
                                         <p className="lead">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolorum fuga, alias distinctio voluptatum magni voluptatibus.</p>
                                     </div>
                                 </div>
+\
 
                                 <div className="row justify-content-center">
                                     <div className="col-md-10 p-5 form-wrap">
                                         <div className="row justify-content-center">
                                             <div className='col-md-10 p-5 form-wrap'>
+                                                <div class="row">
+                                                    <div className="form-group col-md-4">
+                                                        <label htmlFor="date" className="label">Date</label>
+                                                        <div className="form-field-icon-wrap">
+                                                            <input type="date" className="form-control" id="date" name='date' onChange={this.onChange} />
+                                                        </div>
+                                                    </div>
+                                                    <div className="form-group col-md-4">
+                                                        <label htmlFor="time" className="label">Time</label>
+                                                        <div className="form-field-icon-wrap">
+                                                            <input type="time" twelvehour="true" className="form-control" id="time" name='time' onChange={this.onChange} />
+                                                        </div>
+                                                    </div>
+                                                    <div className="form-group col-md-4">
+                                                        <label htmlFor="time" className="label">Search</label>
+                                                        <div className="form-field-icon-wrap">
+                                                            <input type="submit" className="btn btn-primary btn-outline-primary btn-block" value="Search" onClick={this.onSearchTable} />
+                                                        </div>
+                                                    </div>
+                                                </div>
                                                 <div className="row">
+
                                                     {this.onFor(this.state.ordered, this.state.content)}
                                                 </div>
                                             </div>
@@ -128,13 +152,13 @@ class reserForm extends Component {
                                         <div className="form-group col-md-4">
                                             <label htmlFor="date" className="label">Date</label>
                                             <div className="form-field-icon-wrap">
-                                                <input type="date" className="form-control" id="date" name='date' onChange={this.onChange} />
+                                                <input type="date" className="form-control" id="date" name='date' value={this.state.date} />
                                             </div>
                                         </div>
                                         <div className="form-group col-md-4">
                                             <label htmlFor="time" className="label">Time</label>
                                             <div className="form-field-icon-wrap">
-                                                <input type="time" className="form-control" id="time" name='time' onChange={this.onChange} />
+                                                <input type="time" className="form-control" id="time" name='time' value={this.state.time} />
                                             </div>
                                         </div>
                                     </div>
@@ -162,6 +186,49 @@ class reserForm extends Component {
             [name]: value
         });
     }
+    onSearchTable = (e) => {
+        var { date, time, ordered } = this.state;
+        for (var i = 0; i < 16; i++) {
+            ordered[i].status = false;
+            this.setState({
+                ordered: ordered,
+            });
+        }
+        if (date !== '' && time !== '') {
+            var datetime = {
+                date: date,
+                time: time + ":00"
+            }
+            callApi('api/orders/search', 'POST', datetime, null).then(res => {
+                this.setState({
+                    numNotChoose: res.data.data
+                });
+                this.onSetTableNotChoose(this.state.numNotChoose);
+            });
+        } else {
+            alert('Ban chua chon ngay gio!!!');
+        }
+
+    }
+    onSetTableNotChoose = (numString) => {
+        var tableNotChooseString = numString.split(",");
+        var { ordered } = this.state;
+        var tableNotChoose = tableNotChooseString.map(function (x) {
+            return parseInt(x, 10);
+        });
+        this.setState({
+            tableNotChoose: tableNotChoose
+        });
+
+        for (var i = 0; i < 16; i++) {
+            if (tableNotChoose.indexOf(i + 1) > -1) {
+                ordered[i].status = true;
+            }
+            this.setState({
+                ordered: ordered,
+            });
+        }
+    }
     onchoose = (e, i) => {
         var newTable = e.target.innerText;
         var table = this.state.table;
@@ -187,7 +254,7 @@ class reserForm extends Component {
         if (table.length > 0) {
             var reserveTable = "";
             for (var i = 0; i < table.length; i++) {
-                if (i == 0) {
+                if (i === 0) {
                     reserveTable = reserveTable + table[i];
                 } else {
                     reserveTable = reserveTable + "," + table[i];
@@ -253,29 +320,38 @@ class reserForm extends Component {
     }
     onchoose = (e, i, content) => {
 
+        var { date, time, numNotChoose, tableNotChoose } = this.state;
         var newTable = parseInt(e.target.innerText);
         var table = this.state.table;
         var { ordered } = this.state;
 
-        var dem = 0;
-        for (var y = 0; y < table.length; y++) {
-            if (table[y] === newTable) {
-                dem++;
-                table.splice(y, 1);
-                ordered[i].status = !ordered[i].status;
-                this.setState({
-                    table: table,
-                    ordered: ordered
-                })
+        if (date !== '' && time !== '' && numNotChoose !== null) {
+            var dem = 0;
+            if (tableNotChoose.indexOf(i + 1) < 0) {
+                for (var y = 0; y < table.length; y++) {
+                    if (table[y] === newTable) {
+                        dem++;
+                        table.splice(y, 1);
+                        ordered[i].status = !ordered[i].status;
+                        this.setState({
+                            table: table,
+                            ordered: ordered
+                        })
+                    }
+                }
+                if (dem === 0) {
+                    table.push(newTable);
+                    ordered[i].status = !ordered[i].status;
+                    this.setState({
+                        table: table,
+                        ordered: ordered
+                    })
+                }
+            } else {
+                alert('Ban khog the chon vi ban nay da duoc dat');
             }
-        }
-        if (dem === 0) {
-            table.push(newTable);
-            ordered[i].status = !ordered[i].status;
-            this.setState({
-                table: table,
-                ordered: ordered
-            })
+        } else {
+            alert('Ban chua chon ngay gio!!!');
         }
         //console.log(this.state.table);
     }
