@@ -15,13 +15,27 @@ class reserForm extends Component {
         this.state = {
             user: {},
             table: [],
+            ordered: [],
             date: '',
             time: '',
             cart: [],
+            tableNotChoose: [],
+            numNotChoose: null,
             totalMoney: 0
         }
     }
     componentDidMount() {
+        var ordered = this.state.ordered;
+        for (var i = 0; i < 16; i++) {
+            var table = {
+                id: i,
+                status: false
+            }
+            ordered.push(table);
+            this.setState({
+                ordered: ordered,
+            });
+        }
         if (localStorage.getItem('token') && localStorage.getItem('user') && localStorage.getItem('cartid')) {
             var user = JSON.parse(localStorage.getItem('user'));
             this.setState({
@@ -51,13 +65,50 @@ class reserForm extends Component {
                             </div>
                         </div>
 
-                        {/* <div className="row justify-content-center">
-                            <div className='col-md-10 p-5 form-wrap'>
-                                <div className="row">
-                                    {this.onFor(16)}
+                        <div className="section" data-aos="fade-up">
+                            <div className="container">
+                                <div className="row justify-content-center mb-5">
+                                    <div className="col-md-8  text-center">
+                                        <h2 className="mb-3">Reservation</h2>
+                                        <p className="lead">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolorum fuga, alias distinctio voluptatum magni voluptatibus.</p>
+                                    </div>
+                                </div>
+\
+
+                                <div className="row justify-content-center">
+                                    <div className="col-md-10 p-5 form-wrap">
+                                        <div className="row justify-content-center">
+                                            <div className='col-md-10 p-5 form-wrap'>
+                                                <div class="row">
+                                                    <div className="form-group col-md-4">
+                                                        <label htmlFor="date" className="label">Date</label>
+                                                        <div className="form-field-icon-wrap">
+                                                            <input type="date" className="form-control" id="date" name='date' onChange={this.onChange} />
+                                                        </div>
+                                                    </div>
+                                                    <div className="form-group col-md-4">
+                                                        <label htmlFor="time" className="label">Time</label>
+                                                        <div className="form-field-icon-wrap">
+                                                            <input type="time" twelvehour="true" className="form-control" id="time" name='time' onChange={this.onChange} />
+                                                        </div>
+                                                    </div>
+                                                    <div className="form-group col-md-4">
+                                                        <label htmlFor="time" className="label">Search</label>
+                                                        <div className="form-field-icon-wrap">
+                                                            <input type="submit" className="btn btn-primary btn-outline-primary btn-block" value="Search" onClick={this.onSearchTable} />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div className="row">
+
+                                                    {this.onFor(this.state.ordered, this.state.content)}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
-                        </div> */}
+                        </div>
 
                         <div className="row justify-content-center">
                             <div className="col-md-10 p-5 form-wrap">
@@ -101,13 +152,13 @@ class reserForm extends Component {
                                         <div className="form-group col-md-4">
                                             <label htmlFor="date" className="label">Date</label>
                                             <div className="form-field-icon-wrap">
-                                                <input type="date" className="form-control" id="date" name='date' onChange={this.onChange} />
+                                                <input type="date" className="form-control" id="date" name='date' value={this.state.date} />
                                             </div>
                                         </div>
                                         <div className="form-group col-md-4">
                                             <label htmlFor="time" className="label">Time</label>
                                             <div className="form-field-icon-wrap">
-                                                <input type="time" className="form-control" id="time" name='time' onChange={this.onChange} />
+                                                <input type="time" className="form-control" id="time" name='time' value={this.state.time} />
                                             </div>
                                         </div>
                                     </div>
@@ -135,6 +186,49 @@ class reserForm extends Component {
             [name]: value
         });
     }
+    onSearchTable = (e) => {
+        var { date, time, ordered } = this.state;
+        for (var i = 0; i < 16; i++) {
+            ordered[i].status = false;
+            this.setState({
+                ordered: ordered,
+            });
+        }
+        if (date !== '' && time !== '') {
+            var datetime = {
+                date: date,
+                time: time + ":00"
+            }
+            callApi('api/orders/search', 'POST', datetime, null).then(res => {
+                this.setState({
+                    numNotChoose: res.data.data
+                });
+                this.onSetTableNotChoose(this.state.numNotChoose);
+            });
+        } else {
+            alert('Ban chua chon ngay gio!!!');
+        }
+
+    }
+    onSetTableNotChoose = (numString) => {
+        var tableNotChooseString = numString.split(",");
+        var { ordered } = this.state;
+        var tableNotChoose = tableNotChooseString.map(function (x) {
+            return parseInt(x, 10);
+        });
+        this.setState({
+            tableNotChoose: tableNotChoose
+        });
+
+        for (var i = 0; i < 16; i++) {
+            if (tableNotChoose.indexOf(i + 1) > -1) {
+                ordered[i].status = true;
+            }
+            this.setState({
+                ordered: ordered,
+            });
+        }
+    }
     onchoose = (e, i) => {
         var newTable = e.target.innerText;
         var table = this.state.table;
@@ -156,44 +250,112 @@ class reserForm extends Component {
     }
     onSubmit = (e) => {
         e.preventDefault();
-        var { user } = this.state;
-        var datetime = this.state.date + ' ' + this.state.time;
-        if (localStorage.getItem('cartid') && localStorage.getItem('token')) {
-            var cartid = this.props.cartid;
-            var token = localStorage.getItem('token');
-            var totalMoney = this.countSum(this.state.cart);
-            var body = {
-                total: totalMoney,
-                perNum: '0',
-                orderDate: datetime + ':00',
-                service: '0',
+        var { user, table } = this.state;
+        if (table.length > 0) {
+            var reserveTable = "";
+            for (var i = 0; i < table.length; i++) {
+                if (i === 0) {
+                    reserveTable = reserveTable + table[i];
+                } else {
+                    reserveTable = reserveTable + "," + table[i];
+                }
             }
-            if (this.state.date !== '' && this.state.time !== '') {
-                console.log(body);
-                callApi(`api/orders/${cartid}`, 'PATCH', body, { 'Authorization': `Bearer ${JSON.parse(token)}` }).then(res => {
-                    alert('Đã đặt thành công!!!');
-                    localStorage.removeItem('cartid');
-                }).catch(err => {
-                    console.log(Date().toLocaleString());
-                });
+
+            var datetime = this.state.date + ' ' + this.state.time;
+            if (localStorage.getItem('cartid') && localStorage.getItem('token')) {
+                var cartid = this.props.cartid;
+                var token = localStorage.getItem('token');
+                var totalMoney = this.countSum(this.state.cart);
+                var body = {
+                    total: totalMoney,
+                    perNum: reserveTable,
+                    orderDate: datetime + ':00',
+                    service: '0',
+                }
+                if (this.state.date !== '' && this.state.time !== '') {
+                    console.log(body);
+                    callApi(`api/orders/${cartid}`, 'PATCH', body, { 'Authorization': `Bearer ${JSON.parse(token)}` }).then(res => {
+                        alert('Đã đặt thành công!!!');
+                        localStorage.removeItem('cartid');
+                    }).catch(err => {
+                        console.log(Date().toLocaleString());
+                    });
+                } else {
+                    alert('Moi nhap day du ngay gio den!!!')
+                }
+
             } else {
-                alert('Moi nhap day du ngay gio den!!!')
+                alert('Moi dat mon truoc!')
             }
-
         } else {
-            alert('Moi dat mon truoc!')
+            alert('Moi ban chon ban');
         }
 
     }
-    onFor = (n) => {
-        const items = [];
-        for (var i = 1; i <= n; i++) {
-            items.push(<div key={i} className="col-xs-3 col-sm-3 col-md-3 col-lg-3" style={{ marginBottom: '10px' }}>
-                <p style={{ color: 'black', textAlign: 'center' }} table={i} onClick={(e) => this.onchoose(e, i)}>{i}</p>
-            </div>);
+    onFor = (ordered, content) => {
+        var result = null;
+        var style1 = {
+            color: 'black',
+            textAlign: 'center',
+            margin: '50px'
         }
-        return items;
+        var style2 = {
+            color: 'black',
+            textAlign: 'center',
+            margin: '50px',
+            background: "#ff0"
+        }
+
+        if (ordered.length > 0) {
+            result = ordered.map((order, index) => {
+                return (
+                    <div key={index} className="col-xs-3 col-sm-3 col-md-3 col-lg-3" style={{ marginBottom: '10px' }}>
+                        <p style={order.status === false ? style1 : style2} table={index} onClick={(e) => this.onchoose(e, index, content)}>{index + 1}</p>
+                    </div>
+                );
+            })
+        }
+
+        return result;
     }
+    onchoose = (e, i, content) => {
+
+        var { date, time, numNotChoose, tableNotChoose } = this.state;
+        var newTable = parseInt(e.target.innerText);
+        var table = this.state.table;
+        var { ordered } = this.state;
+
+        if (date !== '' && time !== '' && numNotChoose !== null) {
+            var dem = 0;
+            if (tableNotChoose.indexOf(i + 1) < 0) {
+                for (var y = 0; y < table.length; y++) {
+                    if (table[y] === newTable) {
+                        dem++;
+                        table.splice(y, 1);
+                        ordered[i].status = !ordered[i].status;
+                        this.setState({
+                            table: table,
+                            ordered: ordered
+                        })
+                    }
+                }
+                if (dem === 0) {
+                    table.push(newTable);
+                    ordered[i].status = !ordered[i].status;
+                    this.setState({
+                        table: table,
+                        ordered: ordered
+                    })
+                }
+            } else {
+                alert('Ban khog the chon vi ban nay da duoc dat');
+            }
+        } else {
+            alert('Ban chua chon ngay gio!!!');
+        }
+        //console.log(this.state.table);
+    }
+
 }
 const mapStateToProps = state => {
     return {

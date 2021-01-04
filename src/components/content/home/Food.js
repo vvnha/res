@@ -1,8 +1,10 @@
 import { Component } from 'react';
+import NumberFormat from 'react-number-format';
 import foods from '../../../reducers/foods';
 import callApi from '../utils/apiCaller';
 import * as actions from '../../../actions/index';
 import { connect } from 'react-redux';
+import * as Config from '../../../constants/config';
 
 class Food extends Component {
     constructor(props) {
@@ -55,12 +57,13 @@ class Food extends Component {
         return (
             <div className="media d-block media-bg-white mb-5" data-aos="fade-up" data-aos-delay="400">
                 <figure>
-                    <a href="#"><img src="default/img/img_1.jpg" alt="Image placeholder" className="img-fluid" /></a>
+                    <a href="#"><img src={`${Config.API_URL}/${food.img}`} alt="Image placeholder" className="img-fluid" style={{ height: "150px", objectFit: "cover" }} /></a>
                 </figure>
                 <div className="media-body">
                     <h3><a href="#" className="nameFood">{food.foodName}</a></h3>
                     <p className="post-meta"><span><span className="fa fa-calendar"></span>{food.ingres}</span></p>
-                    <div className="price order-2"><strong className="mau">{food.price}</strong></div>
+                    <div className="price order-2"><strong className="mau"><NumberFormat value={parseInt
+                        (food.price)} displayType={'text'} thousandSeparator={true} /> VND</strong></div>
                     <p className="post-meta"><a href="" className="btn btn-primary btn-outline-primary btn-sm" onClick={this.onSubmit}>Order</a></p>
                 </div>
             </div>

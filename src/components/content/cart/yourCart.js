@@ -1,6 +1,7 @@
 import { Component } from 'react';
 import CartItem from './cartItem';
 import callApi from '../utils/apiCaller';
+import NumberFormat from 'react-number-format';
 import { connect } from 'react-redux';
 import * as actions from '../../../actions/index';
 import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
@@ -51,7 +52,8 @@ class YourCart extends Component {
                                         <h3 style={{ float: "left" }} ><a href="#" >Total:</a></h3>
                                     </div>
                                     <div className="price order-2">
-                                        <strong>{totalMoney} VND</strong>
+                                        <strong><NumberFormat value={parseInt
+                                            (totalMoney)} displayType={'text'} thousandSeparator={true} /> VND</strong>
                                     </div>
                                 </div>
                                 <div className="d-block d-md-flex menu-food-item">

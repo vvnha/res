@@ -1,5 +1,6 @@
 import { Component } from 'react';
 import { connect } from 'react-redux';
+import NumberFormat from 'react-number-format';
 import * as actions from '../../../actions/index';
 import callApi from '../utils/apiCaller';
 
@@ -55,7 +56,8 @@ class CartItem extends Component {
                     <p style={{ float: "left", width: '100%', marginTop: '10px' }}><input name="number" className='quantity form-control' style={{ width: '150px', height: '35px' }} min="1" max="1000" defaultValue={food.qty} name='qty' onChange={this.onChange}></input></p>
                 </div>
                 <div className="price order-2">
-                    <strong>{food.price} VND</strong>
+                    <strong><NumberFormat value={parseInt
+                        (food.price)} displayType={'text'} thousandSeparator={true} /> VND</strong>
                     <a className="btn btn-primary btn-outline-primary btn-sm cancel" style={{ float: 'right', marginRight: '0px', marginTop: '10px' }}>Cancel</a>
                 </div>
             </div>

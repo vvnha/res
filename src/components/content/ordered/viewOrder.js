@@ -13,12 +13,13 @@ class ViewOrder extends Component {
         super(props);
         this.state = {
             order: [],
+            orderAgree: [],
+            orderCancel: [],
             isLoading: true
         }
     }
 
     componentDidMount() {
-        console.log(this.props.match);
         if (localStorage.getItem('token') && cartid !== null) {
             var cartid = this.props.cartid;
             var token = localStorage.getItem('token');
@@ -41,11 +42,29 @@ class ViewOrder extends Component {
                             <div className="col-md-8" data-aos="fade-up">
 
                                 <h2 className="mb-5 text-center">Your Ordered List</h2>
+                                <ul className="nav site-tab-nav" id="pills-tab" role="tablist">
+                                    <li className="nav-item">
+                                        <a className="nav-link active" id="pills-breakfast-tab" data-toggle="pill" href="#pills-breakfast" role="tab" aria-controls="pills-breakfast" aria-selected="true">DA DAT</a>
+                                    </li>
+                                    <li className="nav-item">
+                                        <a className="nav-link" id="pills-lunch-tab" data-toggle="pill" href="#pills-lunch" role="tab" aria-controls="pills-lunch" aria-selected="false">DA HUY</a>
+                                    </li>
+                                </ul>
+
                                 <div className="overflow-auto">
 
                                     <div className="tab-content" id="pills-tabContent">
+                                        <div className="tab-pane fade show active" id="pills-breakfast" role="tabpanel" aria-labelledby="pills-breakfast-tab">
+                                            <div className="carousel-inner">
+                                                {this.forOrderItem(this.state.orderAgree.sort().reverse(), 1)}
+                                            </div>
+                                        </div>
 
-                                        {this.forOrderItem(this.state.order.sort().reverse())}
+                                        <div className="tab-pane fade" id="pills-lunch" role="tabpanel" aria-labelledby="pills-lunch-tab">
+                                            <div className="carousel-inner">
+                                                {this.forOrderItem(this.state.orderCancel.sort().reverse(), 2)}
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -58,6 +77,7 @@ class ViewOrder extends Component {
     forOrder = (orders, token) => {
         var result = null;
         var dem = 0;
+        var { orderAgree, orderCancel } = this.state;
         if (orders.length > 0) {
             result = orders.map((order, index) => {
                 if (Number(order.perNum) !== 1000 && !order.service.includes('-1')) {
@@ -66,19 +86,30 @@ class ViewOrder extends Component {
                     this.setState({
                         order: ordered,
                     });
+                    if (order.service.includes('0')) {
+                        orderAgree.push(order);
+                        this.setState({
+                            orderAgree: orderAgree
+                        });
+                    } else {
+                        orderCancel.push(order);
+                        this.setState({
+                            orderCancel: orderCancel
+                        });
+                    }
                 }
             });
         }
         return result;
     }
-    forOrderItem = (orders) => {
+    forOrderItem = (orders, type) => {
         var result = null;
         if (orders.length > 0) {
             result = orders.map((order, index) => {
                 var token = localStorage.getItem('token');
                 var detail = null;
                 return (
-                    <OrderItem match={this.props.match} order={order} key={index} vitri={index} />
+                    <OrderItem match={this.props.match} location={this.props.location} order={order} key={index} vitri={index} type={type} />
                 );
             });
         }

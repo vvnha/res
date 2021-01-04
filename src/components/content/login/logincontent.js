@@ -112,7 +112,7 @@ class Logincontent extends Component {
                                         <p htmlFor="email" className="label" style={{ textAlign: 'left' }}>Email</p>
                                         <div className="form-field-icon-wrap">
                                             <span className="icon ion-email"></span>
-                                            <input type="text" className="form-control" id="email" name="email" onChange={this.onChange} />
+                                            <input type="text" className="form-control" id="email" name="email" onChange={this.onChange} placeholder="Nhap email..." />
                                         </div>
                                     </div>
                                     <div className="form-group col-md-12">
