@@ -14,6 +14,7 @@ import Logout from './components/content/login/logout';
 import Registry from './components/content/registry/registry';
 import Ordered from './components/content/ordered/ordered';
 import Details from './components/content/ordered/details';
+import Profile from './components/content/profile/profile';
 import View from './components/content/view/View';
 import User from "./components/content/user/user";
 const Home = lazy(() => import('../src/components/content/home/home'));
@@ -84,6 +85,11 @@ const routes = [
         path: '/logout',
         exact: false,
         main: () => <Logout />  //logout
+    },
+    {
+        path: '/profile',
+        exact: false,
+        main: () => <Profile />  //logout
     },
     {
         path: '',
