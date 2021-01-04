@@ -152,13 +152,13 @@ class reserForm extends Component {
                                         <div className="form-group col-md-4">
                                             <label htmlFor="date" className="label">Date</label>
                                             <div className="form-field-icon-wrap">
-                                                <input type="date" className="form-control" id="date" name='date' value={this.state.date} />
+                                                <input type="date" className="form-control" id="date" name='date' value={this.state.date} onChange={this.onChangeReser} />
                                             </div>
                                         </div>
                                         <div className="form-group col-md-4">
                                             <label htmlFor="time" className="label">Time</label>
                                             <div className="form-field-icon-wrap">
-                                                <input type="time" className="form-control" id="time" name='time' value={this.state.time} />
+                                                <input type="time" className="form-control" id="time" name='time' value={this.state.time} onChange={this.onChangeReser} />
                                             </div>
                                         </div>
                                     </div>
@@ -185,6 +185,11 @@ class reserForm extends Component {
         this.setState({
             [name]: value
         });
+    }
+    onChangeReser = (e) => {
+        if (true) {
+            alert('moi chon ngay va chon ban o tren');
+        }
     }
     onSearchTable = (e) => {
         var { date, time, ordered } = this.state;

@@ -21,16 +21,16 @@ const menus = [
         to: '/menu',
         exact: false
     },
-    {
-        name: 'Our Blog',
-        to: '/blog',
-        exact: false
-    },
-    {
-        name: 'Reserve A Table',
-        to: '/reservation',
-        exact: false
-    },
+    // {
+    //     name: 'Our Blog',
+    //     to: '/blog',
+    //     exact: false
+    // },
+    // {
+    //     name: 'Reserve A Table',
+    //     to: '/reservation',
+    //     exact: false
+    // },
     {
         name: 'Contact',
         to: '/contact',
