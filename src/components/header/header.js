@@ -39,11 +39,6 @@ const menus = [
 ]
 const logOut = [
     {
-        name: 'Profile',
-        to: '/profile',
-        exact: false
-    },
-    {
         name: 'Your Cart',
         to: '/cart',
         exact: false
@@ -181,7 +176,7 @@ class Header extends Component {
         }
         var show = isDisplayForm ? "is-show" : "";
         var classOfMenu = isDisplayForm === true ? 'scrolled awake' : 'scrolled awake';
-        var userName = this.state.userName !== null && localStorage.getItem('token') ? this.state.userName : 'Login';
+        var userName = this.state.userName !== null && localStorage.getItem('token') ? <Link className="fa" to="/profile">{this.state.userName}</Link> : <li><a href="/login" ><span className="fa">Login</span></a></li>;
         var showButton = this.state.userName !== null && localStorage.getItem('token') ? '' : <li><a href="/registry" ><span className="fa">Sign up</span></a></li>;
 
         return (
@@ -192,6 +187,7 @@ class Header extends Component {
                             <div className="site-menu-inner">
                                 <ul className="list-unstyled" onClick={this.onToggleForm}>
                                     {this.showMenus(this.state.menus, show)}
+                                    {this.state.user.positionID === 1 ? <li className="is-show"><a href="http://restaurantqn.herokuapp.com/login">Admin permission</a></li> : ''}
                                 </ul>
                             </div>
                         </nav>
@@ -202,7 +198,7 @@ class Header extends Component {
                                         <li><a href="#" ><span className="fa fa-facebook"></span></a></li>
                                         <li><a href="#" ><span className="fa fa-twitter"></span></a></li>
                                         <li><a href="#" ><span className="fa fa-instagram"></span></a></li>
-                                        <li><a href="/login" ><span className="fa">{userName}</span></a></li>
+                                        {userName}
                                         {/*<li><a href="/registry" ><span className="fa">Sign up</span></a></li>*/}
                                         {showButton}
                                     </ul>
@@ -225,8 +221,9 @@ class Header extends Component {
         var result = null;
         if (menus.length > 0) {
             result = menus.map((menu, index) => {
-                return (<MenuLink key={index} label={menu.name} to={menu.to} acitiveOnlyWhenExact={menu.exact} cla={show} />);
-            })
+                return (<MenuLink key={index} label={menu.name} to={menu.to} acitiveOnlyWhenExact={menu.exact} cla={show} position={this.state.user} />);
+            });
+
         }
         return result;
     }

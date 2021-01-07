@@ -29,9 +29,11 @@ class logout extends Component {
                 .then(res => {
                     localStorage.removeItem('token');
                     localStorage.removeItem('user');
+                    localStorage.removeItem('cartid');
                 }).catch(err => {
                     localStorage.removeItem('token');
                     localStorage.removeItem('user');
+                    localStorage.removeItem('cartid');
                 });
             return <Redirect to="/" />
         } else {
