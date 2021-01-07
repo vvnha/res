@@ -11,7 +11,7 @@ var connectionOptions = {
     "timeout": 10000,
     "transports": ["websocket"]
 };
-const socket = io("localhost:9000", connectionOptions);
+const socket = io("https://service-table.herokuapp.com/", connectionOptions);
 
 class View extends Component {
     constructor(props) {
