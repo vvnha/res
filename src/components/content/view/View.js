@@ -161,9 +161,8 @@ class View extends Component {
         if (content.includes(',')) {
             tableOrder = content.split(",");
         } else {
-            if (content !== null) {
-                tableOrder[0] = content;
-            }
+            tableOrder = [content];
+            //[...tableOrder, content];
         }
 
         if (tableOrder.length > 0) {
