@@ -8,6 +8,7 @@ class Login extends Component {
     render() {
         return (
             <div>
+                <Header />
                 <Coverlogin />
                 <Logincontent />
                 <Footer />

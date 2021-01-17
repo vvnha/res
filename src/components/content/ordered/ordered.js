@@ -1,19 +1,19 @@
 import { Component } from 'react';
 import Footer from '../../footer/footer';
 import Header from '../../header/header';
-import Coverregistry from './coverregistry';
-import Registrycontent from './registrycontent';
+import Cover from '../blog/cover';
+import ViewOrder from './viewOrder';
 
-class Registry extends Component {
+class Ordered extends Component {
     render() {
         return (
             <div>
                 <Header />
-                <Coverregistry />
-                < Registrycontent />
+                <Cover name={"Ordered"} />
+                <ViewOrder match={this.props.match} location={this.props.location} />
                 <Footer />
             </div>
         );
     }
 }
-export default Registry;
+export default Ordered;

@@ -1,19 +1,19 @@
 import { Component } from 'react';
 import Footer from '../../footer/footer';
 import Header from '../../header/header';
-import Coverregistry from './coverregistry';
-import Registrycontent from './registrycontent';
+import Cover from '../blog/cover';
+import UserInfo from "./userInfo";
 
-class Registry extends Component {
+class User extends Component {
     render() {
         return (
             <div>
                 <Header />
-                <Coverregistry />
-                < Registrycontent />
+                <Cover name={"User Information"} />
+                <UserInfo />
                 <Footer />
             </div>
         );
     }
 }
-export default Registry;
+export default User;

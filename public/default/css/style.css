@@ -433,7 +433,7 @@ textarea.form-control {
   border-bottom: 1px dotted #ccc;
   float: left;
   width: 100%;
-  padding-bottom: 30px;
+  padding-bottom: 0px; 
   margin-bottom: 30px;
 }
 
@@ -454,7 +454,7 @@ textarea.form-control {
 
 @media (min-width: 768px) {
   .menu-food-item .price {
-    width: 70px;
+    width: 200px;
     text-align: right;
   }
 }

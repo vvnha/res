@@ -8,6 +8,7 @@ class BlogSingle extends Component {
     render() {
         return (
             <div>
+                <Header />
                 <Cover />
                 <div className="section">
                     <div className="container">

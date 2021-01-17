@@ -1,30 +1,32 @@
 import './App.css';
 import { Component } from 'react';
-import { BrowserRouter as Router, Route, Switch,Link } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Switch, Link } from 'react-router-dom';
 import Header from './components/header/header';
 import routes from './routes';
 import Login from './components/content/login/login';
 import Registry from './components/content/registry/registry';
+import Details from "./components/content/ordered/details";
 import { connect } from 'react-redux';
+import View from './components/content/view/View';
 
 class App extends Component {
 
   render() {
     return (
       <Router>
-      
-      <Route path="/login"  Component = {Login}/>
-      <Route path="/registry" exact Component = {Registry}/>
+
+        <Route path="/login" Component={Login} />
+        <Route path="/registry" exact Component={Registry} />
+
 
         <div className="App">
-          <div className="site-wrap">
-            <Header />
+          <div className="site-wrap" style={{ background: "white" }}>
             <Switch>
               {this.showContentMenus(routes)}
             </Switch>
           </div>
         </div>
-        
+
       </Router>
 
     );

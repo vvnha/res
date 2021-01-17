@@ -15,3 +15,22 @@ export const closeForm = () => {
         type: types.CLOSE_FORM
     }
 }
+export const storeToken = (token) => {
+    return {
+        type: types.STORE_TOKEN,
+        token
+    }
+}
+
+export const storeCartId = (cartID) => {
+    return {
+        type: types.STORE_CARTID,
+        cartID
+    }
+}
+export const storeUser = (user) => {
+    return {
+        type: types.STORE_USER,
+        user
+    }
+}
