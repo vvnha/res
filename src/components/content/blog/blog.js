@@ -9,7 +9,7 @@ class Blog extends Component {
         return (
             <div>
                 <Header />
-                <Cover />
+                <Cover name={'Blog Grid'} />
                 <Feeds />
                 <Footer />
             </div >

@@ -34,7 +34,11 @@ class YourCart extends Component {
     }
     render() {
         var { cart } = this.state;
-        var totalMoney = this.countSum(this.state.cart);
+        var totalMoney = 0;
+        if (cart.length > 0) {
+            totalMoney = this.countSum(this.state.cart);
+        }
+
         return (
             <div className="section">
                 <div className="container">

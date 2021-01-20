@@ -11,7 +11,7 @@ var connectionOptions = {
     "timeout": 10000,
     "transports": ["websocket"]
 };
-const socket = io("localhost:9000", connectionOptions);
+const socket = io("https://service-table.herokuapp.com/", connectionOptions);
 
 class View extends Component {
     constructor(props) {
@@ -161,9 +161,8 @@ class View extends Component {
         if (content.includes(',')) {
             tableOrder = content.split(",");
         } else {
-            if (content !== null) {
-                tableOrder[0] = content;
-            }
+            tableOrder = [content];
+            //[...tableOrder, content];
         }
 
         if (tableOrder.length > 0) {

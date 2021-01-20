@@ -1,7 +1,7 @@
 import { Component } from 'react';
 import Footer from '../../footer/footer';
 import Header from '../../header/header';
-import Cover from './cover';
+import Cover from '../blog/cover';
 import YourCart from './yourCart';
 
 class Contact extends Component {
@@ -9,7 +9,7 @@ class Contact extends Component {
         return (
             <div>
                 <Header />
-                <Cover />
+                <Cover name={'Your Cart'} />
                 <YourCart />
                 <Footer />
             </div>

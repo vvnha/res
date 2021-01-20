@@ -20,7 +20,7 @@ class App extends Component {
 
 
         <div className="App">
-          <div className="site-wrap">
+          <div className="site-wrap" style={{ background: "white" }}>
             <Switch>
               {this.showContentMenus(routes)}
             </Switch>

@@ -1,7 +1,7 @@
 import { Component } from 'react';
 import Footer from '../../footer/footer';
 import Header from '../../header/header';
-import Cover from './cover';
+import Cover from '../blog/cover';
 import ContactForm from './contactForm';
 import Reviews from './reviews';
 
@@ -10,7 +10,7 @@ class Contact extends Component {
         return (
             <div>
                 <Header />
-                <Cover />
+                <Cover name={'Contact Us'} />
                 <ContactForm />
                 <Reviews />
                 <Footer />

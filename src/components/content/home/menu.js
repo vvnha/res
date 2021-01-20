@@ -24,8 +24,14 @@ class Menu extends Component {
         this.state = {
             foods: [],
             isLoading: true,
-            errors: null
+            errors: null,
+            searchFoods: [],
+            searchName: ''
         };
+    }
+
+    componentDidMount() {
+        this.getFoods();
     }
 
     getFoods() {
@@ -36,15 +42,30 @@ class Menu extends Component {
             });
         });
     }
-
-    componentDidMount() {
-        this.getFoods();
+    getSearch = (e) => {
+        var { searchName } = this.state;
+        console.log(this.state.searchName);
+        var body = {
+            name: searchName
+        }
+        callApi('api/foods/search', 'POST', body).then(res => {
+            this.setState({
+                searchFoods: res.data.data
+            });
+        });
+    }
+    onChange = (e) => {
+        var target = e.target;
+        var name = target.name;
+        var value = target.type === 'checkbox' ? target.checked : target.value;
+        this.setState({
+            [name]: value
+        });
     }
 
     render() {
 
         var { isLoading, foods } = this.state;
-
         return (
             <React.Fragment>
                 {!isLoading ? (
@@ -54,6 +75,16 @@ class Menu extends Component {
                                 <div className="col-md-8" data-aos="fade-up">
 
                                     <h2 className="mb-5 text-center">Menu List with Price</h2>
+                                    <form class="form-inline d-flex justify-content-center md-form form-sm mt-0" style={{ margin: "10px" }}>
+                                        <input class="form-control form-control-sm ml-3 w-75" type="text" placeholder="Search"
+                                            aria-label="Search" onChange={this.onChange} name="searchName" />
+                                        <button type="button" class="btn btn-outline-success" onClick={this.getSearch}>
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+                                                <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"></path>
+                                            </svg> Search
+                                        </button>
+                                    </form>
+                                    {this.showFoodsSearch(this.state.searchFoods)}
 
                                     <ul className="nav site-tab-nav" id="pills-tab" role="tablist">
                                         <li className="nav-item">
@@ -185,6 +216,37 @@ class Menu extends Component {
             });
         }
         return result;
+    }
+
+    showSearch = (foods) => {
+        var result = null;
+        if (foods.length > 0) {
+            result = foods.map((food, index) => {
+                return (
+                    <Food
+                        key={index}
+                        food={food}
+                    />
+                );
+            });
+        }
+        return result;
+    }
+
+    showFoodsSearch = (foods) => {
+        if (foods.length > 0) {
+            return (
+                <div className="tab-pane fade show active" >
+                    <div className="carousel-inner">
+                        <OwlCarousel items={1} className="carousel slide" loop nav margin={8} responsive={responsive}>
+                            {this.showSearch(foods)}
+                        </OwlCarousel>
+                    </div>
+                </div>
+            );
+        } else {
+            return ('');
+        }
     }
 
 }
