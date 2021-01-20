@@ -2,4 +2,4 @@
 deployment:
   tasks:
     - export DEPLOYPATH=/home/nhahangq/public_html/
-    - /bin/cp -R bulid $DEPLOYPATH
+    - /bin/cp -R build $DEPLOYPATH
