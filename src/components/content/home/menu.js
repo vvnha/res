@@ -74,21 +74,21 @@ class Menu extends Component {
                             <div className="row justify-content-center">
                                 <div className="col-md-8" data-aos="fade-up">
 
-                                    <h2 className="mb-5 text-center">Menu List with Price</h2>
+                                    <h2 className="mb-5 text-center">Thực đơn kèm theo giá</h2>
                                     <form class="form-inline d-flex justify-content-center md-form form-sm mt-0" style={{ margin: "10px" }}>
                                         <input class="form-control form-control-sm ml-3 w-75" type="text" placeholder="Search"
                                             aria-label="Search" onChange={this.onChange} name="searchName" />
                                         <button type="button" class="btn btn-outline-success" onClick={this.getSearch}>
                                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
                                                 <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"></path>
-                                            </svg> Search
+                                            </svg> Tìm kiếm
                                         </button>
                                     </form>
                                     {this.showFoodsSearch(this.state.searchFoods)}
 
                                     <ul className="nav site-tab-nav" id="pills-tab" role="tablist">
                                         <li className="nav-item">
-                                            <a className="nav-link active" id="pills-breakfast-tab" data-toggle="pill" href="#pills-breakfast" role="tab" aria-controls="pills-breakfast" aria-selected="true">Breakfast</a>
+                                            <a className="nav-link active" id="pills-breakfast-tab" data-toggle="pill" href="#pills-breakfast" role="tab" aria-controls="pills-breakfast" aria-selected="true">Thực đơn</a>
                                         </li>
                                         <li className="nav-item">
                                             <a className="nav-link" id="pills-lunch-tab" data-toggle="pill" href="#pills-lunch" role="tab" aria-controls="pills-lunch" aria-selected="false">Brunch</a>

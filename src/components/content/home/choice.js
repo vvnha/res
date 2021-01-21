@@ -8,7 +8,7 @@ class Choice extends Component {
                     <div className="row justify-content-center mb-5" data-aos="fade-up">
                         <div className="col-md-8  text-center">
                             <h2 className="mb-3">Why Choose Us</h2>
-                            <p className="lead">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolorum fuga, alias distinctio voluptatum magni voluptatibus.</p>
+                            <p className="lead">Việc lựa chọn nhà hàng của khách hàng tạo nên uy tín của chúng tôi, việc được khánh hàng tin tưởng tạo nên động lực cho chúng tôi.</p>
                         </div>
                     </div>
                     <div className="row large-gutters">
@@ -23,7 +23,7 @@ class Choice extends Component {
                                     </h3>
                                     <div id="collapseOne" className="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
                                         <div className="p-3">
-                                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consequatur quae cumque perspiciatis aperiam accusantium facilis provident aspernatur nisi optio debitis dolorum, est eum eligendi vero aut ad necessitatibus nulla sit labore doloremque magnam! Ex molestiae, dolor tempora, ad fuga minima enim mollitia consequuntur, necessitatibus praesentium eligendi officia recusandae culpa tempore eaque quasi ullam magnam modi quidem in amet. Quod debitis error placeat, tempore quasi aliquid eaque vel facilis culpa voluptate.</p>
+                                            <p>Sự đa dạng trong nền văn hóa của nhiều quốc gia tạo nên sự phong phú cho nhà hàng, từ đó ẩm thực nhà hàng mang tính đặc trưng riêng biệt. Ẩm thực chất lượng quyết định niềm tin của khách hàng, qua quá trình kỹ càng ở khâu chọn lựa sản phẩm, sàng lọc kỹ càng  rồi mới đến phục vụ khách hàng một cách tận tâm, tạo nên sự tin tưởng từ khách hàng, một món ăn ngon và chất lượng là yếu tố quyết định!</p>
                                         </div>
                                     </div>
                                 </div>
@@ -34,7 +34,7 @@ class Choice extends Component {
                                     </h3>
                                     <div id="collapseTwo" className="collapse" aria-labelledby="headingOne" data-parent="#accordion">
                                         <div className="p-3">
-                                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Vel ad laborum expedita. Nostrum iure atque enim quisquam minima distinctio omnis, consequatur aliquam suscipit, quidem, esse aspernatur! Libero, excepturi animi repellendus porro impedit nihil in doloremque a quaerat enim voluptatum, perspiciatis, quas dignissimos maxime ut cum reiciendis eius dolorum voluptatem aliquam!</p>
+                                            <p>Sự đa dạng trong nền văn hóa của nhiều quốc gia tạo nên sự phong phú cho nhà hàng, từ đó ẩm thực nhà hàng mang tính đặc trưng riêng biệt. Ẩm thực chất lượng quyết định niềm tin của khách hàng, qua quá trình kỹ càng ở khâu chọn lựa sản phẩm, sàng lọc kỹ càng  rồi mới đến phục vụ khách hàng một cách tận tâm, tạo nên sự tin tưởng từ khách hàng, một món ăn ngon và chất lượng là yếu tố quyết định!</p>
                                         </div>
                                     </div>
                                 </div>
@@ -45,7 +45,7 @@ class Choice extends Component {
                                     </h3>
                                     <div id="collapseThree" className="collapse" aria-labelledby="headingOne" data-parent="#accordion">
                                         <div className="p-3">
-                                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Vel ad laborum expedita. Nostrum iure atque enim quisquam minima distinctio omnis, consequatur aliquam suscipit, quidem, esse aspernatur! Libero, excepturi animi repellendus porro impedit nihil in doloremque a quaerat enim voluptatum, perspiciatis, quas dignissimos maxime ut cum reiciendis eius dolorum voluptatem aliquam!</p>
+                                            <p>Sự đa dạng trong nền văn hóa của nhiều quốc gia tạo nên sự phong phú cho nhà hàng, từ đó ẩm thực nhà hàng mang tính đặc trưng riêng biệt. Ẩm thực chất lượng quyết định niềm tin của khách hàng, qua quá trình kỹ càng ở khâu chọn lựa sản phẩm, sàng lọc kỹ càng  rồi mới đến phục vụ khách hàng một cách tận tâm, tạo nên sự tin tưởng từ khách hàng, một món ăn ngon và chất lượng là yếu tố quyết định!</p>
                                         </div>
                                     </div>
                                 </div>

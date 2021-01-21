@@ -13,7 +13,7 @@ class Staff extends Component {
                             <OwlCarousel items={1} className="owl-carousel home-slider-loop-false" loop nav margin={8} >
                                 <div className="item">
                                     <blockquote className="testimonial">
-                                        <p>&ldquo;Lorem ipsum dolor sit amet consectetur adipisicing elit. Expedita quaerat recusandae molestias incidunt sapiente sit numquam delectus mollitia! Non laudantium impedit voluptas consequatur corrupti. Cumque consequuntur nemo eos et error!&rdquo;</p>
+                                        <p>&ldquo;Với kinh nghiệm lâu năm trong nghề đầu bếp, sự an toàn trong quá trình chuẩn bị thực phẩm lẫn yêu cầu về thẩm mĩ, tôi luôn quan tâm đến sự đánh giá của khách hàng về món ăn, thứ tạo nên thương hiệu của chúng tôi, những người đầu bếp!&rdquo;</p>
                                         <div className="author">
                                             <img src="default/img/person_1.jpg" alt="Image placeholder" className="mb-3" style={{ width: 'auto' }} />
                                             <h4>Maxim Smith</h4>
@@ -23,7 +23,7 @@ class Staff extends Component {
                                 </div>
                                 <div className="item">
                                     <blockquote className="testimonial">
-                                        <p>&ldquo;Sint adipisci laborum dolorum ipsa quidem alias ipsum aperiam aut! Quis rerum soluta dolorem iure nihil velit error sequi? Dignissimos accusantium adipisci unde officia? Dolores aut sequi dolorum repellendus quod.&rdquo;</p>
+                                        <p>&ldquo;Với kinh nghiệm lâu năm trong nghề đầu bếp, sự an toàn trong quá trình chuẩn bị thực phẩm lẫn yêu cầu về thẩm mĩ, tôi luôn quan tâm đến sự đánh giá của khách hàng về món ăn, thứ tạo nên thương hiệu của chúng tôi, những người đầu bếp!&rdquo;</p>
                                         <div className="author">
                                             <img src="default/img/person_2.jpg" alt="Image placeholder" className="mb-3" style={{ width: 'auto' }} />
                                             <h4>Geert Green</h4>
@@ -33,7 +33,7 @@ class Staff extends Component {
                                 </div>
                                 <div className="item">
                                     <blockquote className="testimonial">
-                                        <p>&ldquo;Ratione alias iure ab facere quia aliquam dolor et voluptates esse nihil corporis distinctio hic ea quo ducimus autem cum amet. Quos accusamus iusto porro nulla temporibus numquam commodi soluta.&rdquo;</p>
+                                        <p>&ldquo;Với kinh nghiệm lâu năm trong nghề đầu bếp, sự an toàn trong quá trình chuẩn bị thực phẩm lẫn yêu cầu về thẩm mĩ, tôi luôn quan tâm đến sự đánh giá của khách hàng về món ăn, thứ tạo nên thương hiệu của chúng tôi, những người đầu bếp!&rdquo;</p>
                                         <div className="author">
                                             <img src="default/img/person_3.jpg" alt="Image placeholder" className="mb-3" style={{ width: 'auto' }} />
                                             <h4>Dennis Roman</h4>
@@ -43,7 +43,7 @@ class Staff extends Component {
                                 </div>
                                 <div className="item">
                                     <blockquote className="testimonial">
-                                        <p>&ldquo;Ad quod aspernatur ipsa. Numquam expedita delectus qui ad explicabo voluptas eos vel reiciendis magnam rerum quaerat quisquam accusantium quae saepe ipsam ullam ut ea molestiae porro. Recusandae veniam maxime.&rdquo;</p>
+                                        <p>&ldquo;Với kinh nghiệm lâu năm trong nghề đầu bếp, sự an toàn trong quá trình chuẩn bị thực phẩm lẫn yêu cầu về thẩm mĩ, tôi luôn quan tâm đến sự đánh giá của khách hàng về món ăn, thứ tạo nên thương hiệu của chúng tôi, những người đầu bếp!&rdquo;</p>
                                         <div className="author">
                                             <img src="default/img/person_2.jpg" alt="Image placeholder" className="mb-3" style={{ width: 'auto' }} />
                                             <h4>Geert Green</h4>
