@@ -86,7 +86,7 @@ class ViewOrder extends Component {
                     this.setState({
                         order: ordered,
                     });
-                    if (order.service.includes('0')) {
+                    if (!order.service.includes('3')) {
                         orderAgree.push(order);
                         this.setState({
                             orderAgree: orderAgree
