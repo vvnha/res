@@ -102,7 +102,7 @@ class View extends Component {
                         <div className="row justify-content-center mb-5">
                             <div className="col-md-8  text-center">
                                 <h2 className="mb-3">Reservation</h2>
-                                <p className="lead">Ban cua ban la: {this.state.content}</p>
+                                <p className="lead" style={{ fontSize: '30px' }}>Ban cua ban la: {this.state.content}</p>
                             </div>
                         </div>
 

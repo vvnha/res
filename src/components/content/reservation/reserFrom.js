@@ -58,12 +58,6 @@ class reserForm extends Component {
             <div>
                 <div className="section" data-aos="fade-up">
                     <div className="container">
-                        <div className="row justify-content-center mb-5">
-                            <div className="col-md-8  text-center">
-                                <h2 className="mb-3">Reservation</h2>
-                                <p className="lead">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolorum fuga, alias distinctio voluptatum magni voluptatibus.</p>
-                            </div>
-                        </div>
 
                         <div className="section" data-aos="fade-up">
                             <div className="container">
@@ -73,13 +67,12 @@ class reserForm extends Component {
                                         <p className="lead">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolorum fuga, alias distinctio voluptatum magni voluptatibus.</p>
                                     </div>
                                 </div>
-\
 
                                 <div className="row justify-content-center">
                                     <div className="col-md-10 p-5 form-wrap">
                                         <div className="row justify-content-center">
                                             <div className='col-md-10 p-5 form-wrap'>
-                                                <div class="row">
+                                                <div className="row">
                                                     <div className="form-group col-md-4">
                                                         <label htmlFor="date" className="label">Date</label>
                                                         <div className="form-field-icon-wrap">
@@ -209,6 +202,7 @@ class reserForm extends Component {
                     numNotChoose: res.data.data
                 });
                 this.onSetTableNotChoose(this.state.numNotChoose);
+                alert("Da tim kiem xong ngay gio!!");
             });
         } else {
             alert('Ban chua chon ngay gio!!!');
