@@ -26,12 +26,25 @@ class Menu extends Component {
             isLoading: true,
             errors: null,
             searchFoods: [],
-            searchName: ''
+            searchName: '',
+            cart: {},
+            detail: {
+                foodID: null,
+                orderID: null,
+                price: 0,
+                qty: 1
+            }
         };
     }
 
     componentDidMount() {
         this.getFoods();
+        if (localStorage.getItem('token')) {
+            var token = localStorage.getItem('token');
+            callApi('api/users/getOrderUser', 'GET', null, { 'Authorization': `Bearer ${JSON.parse(token)}` }).then(res => {
+                this.forOrder(res.data.data, token);
+            });
+        }
     }
 
     getFoods() {
@@ -75,11 +88,11 @@ class Menu extends Component {
                                 <div className="col-md-8" data-aos="fade-up">
 
                                     <h2 className="mb-5 text-center">Thực đơn kèm theo giá</h2>
-                                    <form class="form-inline d-flex justify-content-center md-form form-sm mt-0" style={{ margin: "10px" }}>
-                                        <input class="form-control form-control-sm ml-3 w-75" type="text" placeholder="Search"
+                                    <form className="form-inline d-flex justify-content-center md-form form-sm mt-0" style={{ margin: "10px" }}>
+                                        <input className="form-control form-control-sm ml-3 w-75" type="text" placeholder="Search"
                                             aria-label="Search" onChange={this.onChange} name="searchName" />
-                                        <button type="button" class="btn btn-outline-success" onClick={this.getSearch}>
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+                                        <button type="button" className="btn btn-outline-success" onClick={this.getSearch}>
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-search" viewBox="0 0 16 16">
                                                 <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"></path>
                                             </svg> Tìm kiếm
                                         </button>
@@ -248,6 +261,54 @@ class Menu extends Component {
             return ('');
         }
     }
+    forOrder = (orders, token) => {
+        var result = null;
+        if (orders.length > 0) {
+            var dem = 0;
+            result = orders.map((order, index) => {
+                if (Number(order.perNum) === 1000 && order.service.includes('-1')) {
+                    dem = dem + 1;
+                    this.setState({
+                        cart: order
+                    });
+                    this.props.onAddCartId(order.orderID);
+                    return result;
+                }
+            });
+            if (dem === 0) {
+                var today = new Date();
+                var date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate() + " " + today.getHours() + ':' + today.getMinutes() + ':' + today.getSeconds();
+                var body = {
+                    total: 0,
+                    orderDate: date,
+                    perNum: '1000',
+                    service: '-1',
+                    dateClick: date
+                }
+                callApi('api/orders', 'POST', body, { 'Authorization': `Bearer ${JSON.parse(token)}` }).then(res => {
+                    console.log(res);
+                }).catch(err => {
+                    console.log(Date().toLocaleString());
+                });
+            }
+        } else {
+            var today = new Date();
+            var date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate() + " " + today.getHours() + ':' + today.getMinutes() + ':' + today.getSeconds();
+            var body = {
+                total: 0,
+                orderDate: date,
+                perNum: '1000',
+                service: '-1',
+                dateClick: date
+            }
+            callApi('api/orders', 'POST', body, { 'Authorization': `Bearer ${JSON.parse(token)}` }).then(res => {
+                console.log(res);
+            }).catch(err => {
+                console.log(Date().toLocaleString());
+            });
+        }
+        return result;
+    }
 
 }
 const mapStateToProps = state => {
@@ -260,6 +321,9 @@ const mapDispatchToProps = (dispatch, props) => {
     return {
         onAddToken: (token) => {
             dispatch(actions.storeToken(token));
+        },
+        onAddCartId: (cartid) => {
+            dispatch(actions.storeCartId(cartid));
         }
     };
 }
