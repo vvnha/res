@@ -65,7 +65,7 @@ class YourCart extends Component {
                                         <a className="btn btn-primary btn-outline-primary btn-sm cancel" style={{ float: 'left', marginRight: '0px', marginTop: '10px' }}>Update</a>
                                     </div>
                                     <div className="price order-2">
-                                        <Link to='/reservation' className="btn btn-primary btn-outline-primary btn-sm cancel" style={{ float: 'right', marginRight: '0px', marginTop: '10px' }}>Reservation</Link>
+                                        {this.state.cart.length > 0 ? <Link to='/reservation' className="btn btn-primary btn-outline-primary btn-sm cancel" style={{ float: 'right', marginRight: '0px', marginTop: '10px' }}>Reservation</Link> : 'Moi dat mon tai menu'}
                                     </div>
                                 </div>
                             </div>

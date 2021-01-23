@@ -2,6 +2,7 @@ import { Component } from 'react';
 import callApi from '../utils/apiCaller';
 import * as actions from '../../../actions/index';
 import { connect } from 'react-redux';
+import { Redirect } from 'react-router-dom';
 
 const element = (i) => {
     <div className="col-xs-3 col-sm-3 col-md-3 col-lg-3" style={{ marginBottom: '10px' }}>
@@ -21,7 +22,8 @@ class reserForm extends Component {
             cart: [],
             tableNotChoose: [],
             numNotChoose: null,
-            totalMoney: 0
+            totalMoney: 0,
+            done: false
         }
     }
     componentDidMount() {
@@ -54,6 +56,9 @@ class reserForm extends Component {
     render() {
         var { cart, user } = this.state;
         var totalMoney = this.countSum(this.state.cart);
+        if (this.state.done == true) {
+            return <Redirect to="/ordered" />
+        }
         return (
             <div>
                 <div className="section" data-aos="fade-up">
@@ -276,6 +281,9 @@ class reserForm extends Component {
                     callApi(`api/orders/${cartid}`, 'PATCH', body, { 'Authorization': `Bearer ${JSON.parse(token)}` }).then(res => {
                         alert('Đã đặt thành công!!!');
                         localStorage.removeItem('cartid');
+                        this.setState({
+                            done: true
+                        });
                     }).catch(err => {
                         console.log(Date().toLocaleString());
                     });
