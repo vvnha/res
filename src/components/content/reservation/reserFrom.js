@@ -203,9 +203,17 @@ class reserForm extends Component {
                 time: time + ":00"
             }
             callApi('api/orders/search', 'POST', datetime, null).then(res => {
-                this.setState({
-                    numNotChoose: res.data.data
-                });
+                console.log(res);
+                // if (res.data.data != null) {
+                //     this.setState({
+                //         numNotChoose: res.data.data
+                //     });
+                // } else {
+                //     this.setState({
+                //         numNotChoose: []
+                //     });
+                // }
+
                 this.onSetTableNotChoose(this.state.numNotChoose);
                 alert("Da tim kiem xong ngay gio!!");
             });
@@ -215,21 +223,27 @@ class reserForm extends Component {
 
     }
     onSetTableNotChoose = (numString) => {
-        var tableNotChooseString = numString.split(",");
-        var { ordered } = this.state;
-        var tableNotChoose = tableNotChooseString.map(function (x) {
-            return parseInt(x, 10);
-        });
-        this.setState({
-            tableNotChoose: tableNotChoose
-        });
-
-        for (var i = 0; i < 16; i++) {
-            if (tableNotChoose.indexOf(i + 1) > -1) {
-                ordered[i].status = true;
-            }
+        if (numString != null) {
+            var tableNotChooseString = numString.split(",");
+            var { ordered } = this.state;
+            var tableNotChoose = tableNotChooseString.map(function (x) {
+                return parseInt(x, 10);
+            });
             this.setState({
-                ordered: ordered,
+                tableNotChoose: tableNotChoose
+            });
+
+            for (var i = 0; i < 16; i++) {
+                if (tableNotChoose.indexOf(i + 1) > -1) {
+                    ordered[i].status = true;
+                }
+                this.setState({
+                    ordered: ordered,
+                });
+            }
+        } else {
+            this.setState({
+                tableNotChoose: []
             });
         }
     }
@@ -332,7 +346,7 @@ class reserForm extends Component {
         var table = this.state.table;
         var { ordered } = this.state;
 
-        if (date !== '' && time !== '' && numNotChoose !== null) {
+        if (date !== '' && time !== '') {
             var dem = 0;
             if (tableNotChoose.indexOf(i + 1) < 0) {
                 for (var y = 0; y < table.length; y++) {
@@ -358,7 +372,7 @@ class reserForm extends Component {
                 alert('Ban khog the chon vi ban nay da duoc dat');
             }
         } else {
-            alert('Ban chua chon ngay gio!!!');
+            alert('Ban chua chon ngay gio1!!!');
         }
         //console.log(this.state.table);
     }
